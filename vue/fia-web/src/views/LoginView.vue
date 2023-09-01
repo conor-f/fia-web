@@ -40,6 +40,8 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
+
 export default {
   name: 'LoginView',
   data() {
@@ -58,14 +60,31 @@ export default {
   },
   methods: {
     handle_login_button_press(event) {
-      console.log("HOWE(UHI");
-      console.log(event);
-      alert(this.username + ": " + this.password);
+      // Note that login calls must be x-www-form-urlencoded.
+      const params = new URLSearchParams();
+      params.append("username", this.username);
+      params.append("password", this.password);
+      axios.post(
+        "https://fia-api.randombits.host/api/user/login",
+        params
+      ).then(
+        (response) => {
+          console.log(response);
+        }
+      );
     },
     handle_register_button_press(event) {
-      console.log("REG");
-      console.log(event);
-      alert(this.username + ": " + this.password);
+      axios.post(
+        "https://fia-api.randombits.host/api/user/create",
+        {
+          username: this.username,
+          password: this.password
+        },
+      ).then(
+        (response) => {
+          console.log(response);
+        }
+      );
     },
   },
 }
