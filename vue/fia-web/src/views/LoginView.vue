@@ -59,7 +59,7 @@ export default {
     */
   },
   methods: {
-    handle_login_button_press(event) {
+    handle_login_button_press() {
       // Note that login calls must be x-www-form-urlencoded.
       const params = new URLSearchParams();
       params.append("username", this.username);
@@ -73,7 +73,7 @@ export default {
         }
       );
     },
-    handle_register_button_press(event) {
+    handle_register_button_press() {
       axios.post(
         "https://fia-api.randombits.host/api/user/create",
         {
