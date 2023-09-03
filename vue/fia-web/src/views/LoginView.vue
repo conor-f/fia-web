@@ -42,6 +42,10 @@
 <script lang="ts">
 import { login, register } from "@/utils/api.ts"
 import { toast } from "vue-sonner"
+import { useAuthStore } from "@/stores/authStore.ts"
+
+const authStore = useAuthStore()
+
 
 export default {
   name: 'LoginView',
@@ -51,33 +55,28 @@ export default {
       "password": ""
     }
   },
-  computed: {
-    /*
-    ...mapState([
-      'showSidebar',
-      'showDetailsTable'
-    ]),
-    */
-  },
   methods: {
     handle_login_button_press() {
-      try {
-        login(this.username, this.password);
-        toast.success("Login successful");
-        this.$router.push({ path: "/user-details" });
-      } catch (error) {
-        console.error(error);
-        toast.error("Login failed. Let me know!");
-      }
+      login(this.username, this.password)
+        .then(response => {
+          toast.success("Login successful");
+            authStore.accessToken = response["data"]["access_token"];
+            authStore.refreshToken = response["data"]["refresh_token"];
+            this.$router.push({ path: "/user-details" });
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error("Login failed. Let me know!");
+        });
     },
     handle_register_button_press() {
       register(this.username, this.password)
-        .then(
+        .then(response => {
           toast.success("Registered successfully. you can now login.")
-        )
-        .catch(
+        })
+        .catch(error => {
           toast.error("Registration failed. Let me know!")
-        );
+        });
     },
   },
 }

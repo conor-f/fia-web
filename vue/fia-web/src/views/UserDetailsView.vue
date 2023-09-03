@@ -7,6 +7,10 @@
 
 <script lang="ts">
 import { login, register } from "@/utils/api.ts"
+import { useAuthStore } from "@/stores/authStore.ts"
+
+const authStore = useAuthStore()
+
 
 export default {
   name: 'UserDetailsView',
@@ -15,14 +19,6 @@ export default {
       "username": "",
       "password": ""
     }
-  },
-  computed: {
-    /*
-    ...mapState([
-      'showSidebar',
-      'showDetailsTable'
-    ]),
-    */
   },
   methods: {
     handle_login_button_press() {
