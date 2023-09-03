@@ -5,7 +5,7 @@ const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
 
 
-function getAuthenticatedRequest(axiosDetails) {
+function getAuthenticatedRequest(axiosDetails: object) {
   // axiosDetails defined here:
   // https://axios-http.com/docs/api_intro
   return axios(axiosDetails).catch(error => {
@@ -42,7 +42,16 @@ export function getUserDetails() {
         "Authorization": "Bearer " + authStore.accessToken
       }
     }
-  );
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
 }
 
 export function deleteAccount() {
