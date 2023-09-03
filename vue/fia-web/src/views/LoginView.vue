@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import { login, register } from "@/utils/api.ts"
+import { toast } from "vue-sonner"
 
 export default {
   name: 'LoginView',
@@ -62,21 +63,21 @@ export default {
     handle_login_button_press() {
       try {
         login(this.username, this.password);
-        alert("Login successful");
+        toast.success("Login successful");
         this.$router.push({ path: "/user-details" });
       } catch (error) {
         console.error(error);
-        alert("Login failed. Let me know!");
+        toast.error("Login failed. Let me know!");
       }
     },
     handle_register_button_press() {
-      try {
-        register(this.username, this.password);
-        alert("Registered successfully. you can now login.")
-      } catch (error) {
-        console.error(error);
-        alert("Registration failed. Let me know!")
-      }
+      register(this.username, this.password)
+        .then(
+          toast.success("Registered successfully. you can now login.")
+        )
+        .catch(
+          toast.error("Registration failed. Let me know!")
+        );
     },
   },
 }

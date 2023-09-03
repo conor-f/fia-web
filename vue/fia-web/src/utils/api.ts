@@ -26,7 +26,7 @@ export function login(username, password) {
 }
 
 export function register(username, password) {
-  axios.post(
+  return axios.post(
     API_BASE_URL + "user/create",
     {
       username: username,
