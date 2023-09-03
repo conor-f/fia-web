@@ -44,16 +44,14 @@ export default {
   },
   methods: {
     handleLogoutClick() {
-      authStore.accessToken = null;
-      authStore.refreshToken = null;
+      authStore.clearTokens();
       this.$router.push({ path: "/" });
       toast.success("Logout successful");
     },
     handleDeleteClick() {
-      this.handleLogoutClick();
-
       deleteAccount()
         .then(response => {
+          authStore.clearTokens();
           toast.success("Account deleted successfully");
           this.$router.push({ path: "/" });
         })

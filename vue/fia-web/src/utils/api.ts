@@ -5,6 +5,16 @@ const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
 
 
+function getAuthenticatedRequest(axiosDetails) {
+  // axiosDetails defined here:
+  // https://axios-http.com/docs/api_intro
+  return axios(axiosDetails).catch(error => {
+    console.log("HEY HEY");
+    throw error;
+  });
+}
+
+
 export function login(username: string, password: string) {
   // Note that login calls must be x-www-form-urlencoded.
   const params = new URLSearchParams();
@@ -36,8 +46,9 @@ export function getUserDetails() {
 }
 
 export function deleteAccount() {
-  return axios.get(
+  return axios.post(
     API_BASE_URL + "user/delete",
+    {},
     {
       headers: {
         "Authorization": "Bearer " + authStore.accessToken

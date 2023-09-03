@@ -7,4 +7,10 @@ export const useAuthStore = defineStore('authStore', {
     accessToken: useLocalStorage("accessToken", null),
     refreshToken: useLocalStorage("refreshToken", null)
   }),
+  actions: {
+    clearTokens() {
+      this.accessToken = null;
+      this.refreshToken = null;
+    }
+  },
 })
