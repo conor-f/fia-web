@@ -1,9 +1,10 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useLocalStorage } from "@vueuse/core"
 
 export const useAuthStore = defineStore('authStore', {
   state: () => ({
-    accessToken: null,
-    refreshToken: null
+    accessToken: useLocalStorage("accessToken", null),
+    refreshToken: useLocalStorage("refreshToken", null)
   }),
 })

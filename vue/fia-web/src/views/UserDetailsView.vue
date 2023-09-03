@@ -2,25 +2,23 @@
   <div class="user-details-container">
     <h1>This is a User Details page</h1>
 
+    You've logged in {{ userDetails["times_logged_in"] }} times.
   </div>
 </template>
 
 <script lang="ts">
-import { login, register } from "@/utils/api.ts"
-import { useAuthStore } from "@/stores/authStore.ts"
-
-const authStore = useAuthStore()
+import { created } from "vue"
+import { getUserDetails } from "@/utils/api.ts"
 
 
 export default {
   name: 'UserDetailsView',
   data() {
     return {
-      "username": "",
-      "password": ""
+      "userDetails": {},
     }
   },
-  methods: {
+  computed: {
     handle_login_button_press() {
       login(this.username, this.password);
     },
@@ -28,6 +26,15 @@ export default {
       register(this.username, this.password);
     },
   },
+  created() {
+    getUserDetails()
+      .then(response => {
+        this.userDetails = response["data"];
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }
 </script>
 
