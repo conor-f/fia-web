@@ -40,7 +40,12 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
+import { login, register } from "@/utils/api"
+import { toast } from "vue-sonner"
+import { useAuthStore } from "@/stores/authStore"
+
+const authStore = useAuthStore()
+
 
 export default {
   name: 'LoginView',
@@ -50,41 +55,28 @@ export default {
       "password": ""
     }
   },
-  computed: {
-    /*
-    ...mapState([
-      'showSidebar',
-      'showDetailsTable'
-    ]),
-    */
-  },
   methods: {
     handle_login_button_press() {
-      // Note that login calls must be x-www-form-urlencoded.
-      const params = new URLSearchParams();
-      params.append("username", this.username);
-      params.append("password", this.password);
-      axios.post(
-        "https://fia-api.randombits.host/api/user/login",
-        params
-      ).then(
-        (response) => {
-          console.log(response);
-        }
-      );
+      login(this.username, this.password)
+        .then(response => {
+          toast.success("Login successful");
+          authStore.accessToken = response["data"]["access_token"];
+          authStore.refreshToken = response["data"]["refresh_token"];
+          this.$router.push({ path: "/user-details" });
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error("Login failed. Let me know!");
+        });
     },
     handle_register_button_press() {
-      axios.post(
-        "https://fia-api.randombits.host/api/user/create",
-        {
-          username: this.username,
-          password: this.password
-        },
-      ).then(
-        (response) => {
-          console.log(response);
-        }
-      );
+      register(this.username, this.password)
+        .then(response => {
+          toast.success("Registered successfully. you can now login.")
+        })
+        .catch(error => {
+          toast.error("Registration failed. Let me know!")
+        });
     },
   },
 }
