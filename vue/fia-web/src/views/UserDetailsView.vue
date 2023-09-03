@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { getUserDetails } from "@/utils/api"
+import { getUserDetails, deleteAccount } from "@/utils/api"
 import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
 
@@ -48,6 +48,19 @@ export default {
       authStore.refreshToken = null;
       this.$router.push({ path: "/" });
       toast.success("Logout successful");
+    },
+    handleDeleteClick() {
+      this.handleLogoutClick();
+
+      deleteAccount()
+        .then(response => {
+          toast.success("Account deleted successfully");
+          this.$router.push({ path: "/" });
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error("Account deletion failed. Let me know!");
+        });
     },
   }
 }

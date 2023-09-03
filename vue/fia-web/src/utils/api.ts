@@ -34,3 +34,14 @@ export function getUserDetails() {
     }
   );
 }
+
+export function deleteAccount() {
+  return axios.get(
+    API_BASE_URL + "user/delete",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  );
+}

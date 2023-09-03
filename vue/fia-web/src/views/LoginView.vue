@@ -60,9 +60,9 @@ export default {
       login(this.username, this.password)
         .then(response => {
           toast.success("Login successful");
-            authStore.accessToken = response["data"]["access_token"];
-            authStore.refreshToken = response["data"]["refresh_token"];
-            this.$router.push({ path: "/user-details" });
+          authStore.accessToken = response["data"]["access_token"];
+          authStore.refreshToken = response["data"]["refresh_token"];
+          this.$router.push({ path: "/user-details" });
         })
         .catch(error => {
           console.log(error);
