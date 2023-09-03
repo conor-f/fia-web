@@ -40,7 +40,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import { login, register } from "@/utils/api.ts"
 
 export default {
@@ -61,10 +60,23 @@ export default {
   },
   methods: {
     handle_login_button_press() {
-      login(this.username, this.password);
+      try {
+        login(this.username, this.password);
+        alert("Login successful");
+        this.$router.push({ path: "/user-details" });
+      } catch (error) {
+        console.error(error);
+        alert("Login failed. Let me know!");
+      }
     },
     handle_register_button_press() {
-      register(this.username, this.password);
+      try {
+        register(this.username, this.password);
+        alert("Registered successfully. you can now login.")
+      } catch (error) {
+        console.error(error);
+        alert("Registration failed. Let me know!")
+      }
     },
   },
 }

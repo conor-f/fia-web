@@ -22,12 +22,7 @@ export function login(username, password) {
   params.append("username", username);
   params.append("password", password);
 
-  axios.post(API_BASE_URL + "user/login", params).then(
-    (response) => {
-      alert(response);
-      console.log(response);
-    }
-  );
+  axios.post(API_BASE_URL + "user/login", params);
 }
 
 export function register(username, password) {
@@ -37,10 +32,5 @@ export function register(username, password) {
       username: username,
       password: password
     },
-  ).then(
-    (response) => {
-      alert(response);
-      console.log(response);
-    }
-  );
+  )
 }
