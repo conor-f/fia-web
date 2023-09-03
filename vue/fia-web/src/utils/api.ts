@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { useAuthStore } from "@/stores/authStore.ts"
+import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
 
 
-export function login(username, password) {
+export function login(username: string, password: string) {
   // Note that login calls must be x-www-form-urlencoded.
   const params = new URLSearchParams();
   params.append("username", username);
@@ -14,7 +14,7 @@ export function login(username, password) {
   return axios.post(API_BASE_URL + "user/login", params)
 }
 
-export function register(username, password) {
+export function register(username: string, password: string) {
   return axios.post(
     API_BASE_URL + "user/create",
     {

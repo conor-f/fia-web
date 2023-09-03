@@ -40,9 +40,9 @@
 </template>
 
 <script lang="ts">
-import { login, register } from "@/utils/api.ts"
+import { login, register } from "@/utils/api"
 import { toast } from "vue-sonner"
-import { useAuthStore } from "@/stores/authStore.ts"
+import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
 

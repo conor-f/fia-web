@@ -2,34 +2,25 @@
   <div class="user-details-container">
     <h1>This is a User Details page</h1>
 
-    You've logged in {{ userDetails["times_logged_in"] }} times.
+    You've logged in {{ timesLoggedIn }} times.
   </div>
 </template>
 
 <script lang="ts">
-import { created } from "vue"
-import { getUserDetails } from "@/utils/api.ts"
+import { getUserDetails } from "@/utils/api"
 
 
 export default {
   name: 'UserDetailsView',
   data() {
     return {
-      "userDetails": {},
+      "timesLoggedIn": 0,
     }
-  },
-  computed: {
-    handle_login_button_press() {
-      login(this.username, this.password);
-    },
-    handle_register_button_press() {
-      register(this.username, this.password);
-    },
   },
   created() {
     getUserDetails()
       .then(response => {
-        this.userDetails = response["data"];
+        this.timesLoggedIn = response["data"]["times_logged_in"];
       })
       .catch(error => {
         console.log(error);
