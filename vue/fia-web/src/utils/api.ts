@@ -65,3 +65,24 @@ export function deleteAccount() {
     }
   );
 }
+
+export function getConversationList() {
+  return axios.get(
+    API_BASE_URL + "user/get-conversations",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+

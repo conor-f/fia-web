@@ -31,6 +31,14 @@ export default {
           role: "system",
           content: "paosifd"
         },
+        {
+          role: "system",
+          content: "paosifd"
+        },
+        {
+          role: "system",
+          content: "paosifd"
+        },
       ]
       return getUserConversation()
         .catch(error => {

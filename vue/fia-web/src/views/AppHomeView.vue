@@ -28,13 +28,15 @@ import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
 
 import ConversationComponent from "@/components/ConversationComponent.vue"
+import ConversationListComponent from "@/components/ConversationListComponent.vue"
 
 const authStore = useAuthStore()
 
 export default {
   name: 'AppHomeView',
   components: {
-    'ConversationComponent': ConversationComponent
+    ConversationComponent,
+    ConversationListComponent,
   },
   data() {
     return {
