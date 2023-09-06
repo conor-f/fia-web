@@ -17,6 +17,7 @@ import { Toaster } from 'vue-sonner'
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/user-details">User Details</RouterLink>
+        <RouterLink to="/app-home">Home</RouterLink>
       </nav>
     </div>
   </header>
