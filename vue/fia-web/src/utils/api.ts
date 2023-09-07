@@ -86,3 +86,44 @@ export function getConversationList() {
   });
 }
 
+
+export function getConversation(conversation_id) {
+  console.log("I do have an id...")
+  console.log(conversation_id)
+
+  return axios.get(
+    API_BASE_URL + "user/get-conversation",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+      params: {
+        "conversation_id": conversation_id
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
+export function converse(conversation_id, message) {
+  return axios.post(
+    API_BASE_URL + "teacher/converse",
+    {
+      conversation_id,
+      message
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  );
+}
