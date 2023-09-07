@@ -3,7 +3,7 @@
     <h1>This is the post-login homepage</h1>
 
     <h2>New Conversation</h2>
-    <ConversationComponent prop_conversation_id="new"/>
+    <NewConversationComponent/>
 
     <h2>Previous Conversations</h2>
     <ConversationListComponent/>
@@ -12,12 +12,14 @@
 
 <script lang="ts">
 import { toast } from "vue-sonner"
+import NewConversationComponent from "@/components/NewConversationComponent.vue"
 import ConversationComponent from "@/components/ConversationComponent.vue"
 import ConversationListComponent from "@/components/ConversationListComponent.vue"
 
 export default {
   name: 'AppHomeView',
   components: {
+    NewConversationComponent,
     ConversationComponent,
     ConversationListComponent,
   },

@@ -14,7 +14,7 @@
     </div>
     <ConversationComponent
       v-if="should_show_conversation_details"
-      :prop_conversation_id="selected_conversation_id"
+      :conversation_id="selected_conversation_id"
       />
   </div>
 </template>
@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     conversationButtonClickHandler(conversation_id) {
-      console.log(conversation_id)
       this.selected_conversation_id = conversation_id
       this.should_show_conversation_details = true
     },
