@@ -9,7 +9,6 @@ function getAuthenticatedRequest(axiosDetails: object) {
   // axiosDetails defined here:
   // https://axios-http.com/docs/api_intro
   return axios(axiosDetails).catch(error => {
-    console.log("HEY HEY");
     throw error;
   });
 }
@@ -58,6 +57,65 @@ export function deleteAccount() {
   return axios.post(
     API_BASE_URL + "user/delete",
     {},
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  );
+}
+
+export function getConversationList() {
+  return axios.get(
+    API_BASE_URL + "user/get-conversations",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
+
+export function getConversation(conversation_id: string) {
+  return axios.get(
+    API_BASE_URL + "user/get-conversation",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+      params: {
+        "conversation_id": conversation_id
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
+export function converse(conversation_id: string, message: string) {
+  return axios.post(
+    API_BASE_URL + "teacher/converse",
+    {
+      conversation_id,
+      message
+    },
     {
       headers: {
         "Authorization": "Bearer " + authStore.accessToken
