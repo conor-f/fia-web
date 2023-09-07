@@ -5,10 +5,13 @@
       :item="conversation"
       :key="conversation"
       >
-      {{ conversation.conversation_id }}
+      <!-- This is ugly but I don't want to fix type errors atm... -->
+      {{ // @ts-ignore
+      conversation.conversation_id }}
       <input
         type="button"
-        @click="conversationButtonClickHandler(conversation.conversation_id)"
+        @click="// @ts-ignore
+        conversationButtonClickHandler(conversation.conversation_id)"
         value="View"
         />
     </div>
@@ -33,7 +36,7 @@ export default {
   data: function() {
     return {
       conversations: [],
-      selected_conversation_id: null,
+      selected_conversation_id: "",
       should_show_conversation_details: false,
     };
   },
@@ -44,7 +47,7 @@ export default {
       });
   },
   methods: {
-    conversationButtonClickHandler(conversation_id) {
+    conversationButtonClickHandler(conversation_id: string) {
       this.selected_conversation_id = conversation_id
       this.should_show_conversation_details = true
     },

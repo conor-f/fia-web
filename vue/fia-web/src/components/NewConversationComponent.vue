@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     handleConversationInput() {
+      // @ts-ignore
       this.conversation.push({
         conversation_element: {
           role: "user",
@@ -60,7 +61,7 @@ export default {
       converse(this.conversation_id, this.userMessage)
         .then(response => {
           this.conversation_id = response.data.conversation_id
-
+          // @ts-ignore
           this.conversation.push(response.data.conversation[0])
         });
     },

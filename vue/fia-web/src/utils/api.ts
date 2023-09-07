@@ -9,7 +9,6 @@ function getAuthenticatedRequest(axiosDetails: object) {
   // axiosDetails defined here:
   // https://axios-http.com/docs/api_intro
   return axios(axiosDetails).catch(error => {
-    console.log("HEY HEY");
     throw error;
   });
 }
@@ -87,10 +86,7 @@ export function getConversationList() {
 }
 
 
-export function getConversation(conversation_id) {
-  console.log("I do have an id...")
-  console.log(conversation_id)
-
+export function getConversation(conversation_id: string) {
   return axios.get(
     API_BASE_URL + "user/get-conversation",
     {
@@ -113,7 +109,7 @@ export function getConversation(conversation_id) {
   });
 }
 
-export function converse(conversation_id, message) {
+export function converse(conversation_id: string, message: string) {
   return axios.post(
     API_BASE_URL + "teacher/converse",
     {
