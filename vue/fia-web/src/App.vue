@@ -6,8 +6,14 @@ import FiaNavBar from './components/FiaNavBar.vue';
 
 <template>
   <FiaNavBar />
-  <RouterView />
+  <div class="router-container">
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
+.router-container {
+  width: 100%;
+  text-align: center;
+}
 </style>

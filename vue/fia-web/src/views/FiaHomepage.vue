@@ -1,5 +1,5 @@
 <template>
-  <main class="centred">
+  <main>
     <h1>
       This is the homepage
     </h1>
@@ -22,8 +22,4 @@
 </script>
 
 <style scoped>
-.centred {
-  width: 100%;
-  text-align: center;
-}
 </style>
