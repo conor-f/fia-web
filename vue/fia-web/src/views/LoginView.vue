@@ -1,45 +1,50 @@
 <template>
-  <div class="login-container">
-    <h1>This is a login page</h1>
+  <div class="mt-5">
+    <div class="mb-2">
+      <label for="username_input">
+        Username:
+      </label>
+        <input
+          type="text"
+          id="username_input"
+          v-model="username"
+        />
+    </div>
 
-    <label for="username_input">
-      Username:
-    </label>
+    <br/>
+
+    <div class="mb-2">
+      <label for="password_input">
+        Password:
+      </label>
       <input
-        type="text"
-        id="username_input"
-        v-model="username"
+        type="password"
+        id="password_input"
+        v-model="password"
       />
+    </div>
 
     <br/>
-    <br/>
 
-    <label for="password_input">
-      Password:
-    </label>
-    <input
-      type="password"
-      id="password_input"
-      v-model="password"
-    />
-
-    <br/>
-    <br/>
-
-    <input
-      type="button"
-      value="Login"
+    <va-button
       @click="handle_login_button_press"
-      />
-    <input
-      type="button"
-      value="Register"
-      @click="handle_register_button_press"
-      />
+      class="mr-4"
+      >
+      Login
+    </va-button>
+
+    <va-button @click="handle_register_button_press"
+      class="mt-3 ml-4"
+      >
+      Register
+    </va-button>
   </div>
 </template>
 
 <script lang="ts">
+/** TODO:
+ * Put inputs into flex/grid
+ */
 import { login, register } from "@/utils/api"
 import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
@@ -83,11 +88,4 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1024px) {
-  .login-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
 </style>

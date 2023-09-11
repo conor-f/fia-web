@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { Toaster } from "vue-sonner"
 import { RouterView } from 'vue-router'
 
 import FiaNavBar from './components/FiaNavBar.vue';
 </script>
 
 <template>
+  <Toaster />
+
   <FiaNavBar />
+
   <div class="router-container">
     <RouterView />
   </div>
