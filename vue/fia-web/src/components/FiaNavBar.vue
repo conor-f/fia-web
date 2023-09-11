@@ -19,19 +19,19 @@
       </va-navbar-item>
 
       <va-navbar-item>
-        <RouterLink to="/">Login/Register</RouterLink>
+        <RouterLink to="/login">Login/Register</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item>
-        <RouterLink to="/">Chat</RouterLink>
+        <RouterLink to="/app-home">Chat</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item>
-        <RouterLink to="/">Review</RouterLink>
+        <RouterLink to="/user-details">Review</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item>
-        <RouterLink to="/">Conversations</RouterLink>
+        <RouterLink to="#">Conversations</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item>
