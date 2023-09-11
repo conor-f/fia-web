@@ -33,12 +33,26 @@
       Login
     </va-button>
 
-    <va-button @click="handle_register_button_press"
+    <va-button @click="show_request_invite_code_modal = true"
       class="mt-3 ml-4"
       >
       Register
     </va-button>
   </div>
+
+
+  <va-modal
+    v-model="show_request_invite_code_modal"
+    ok-text="Register"
+    @ok="handle_register_button_press"
+    blur
+    >
+    <h3>Invite Code</h3>
+      <input
+        class="mt-3"
+        v-model="invite_code"
+      />
+  </va-modal>
 </template>
 
 <script lang="ts">
@@ -57,7 +71,9 @@ export default {
   data() {
     return {
       "username": "",
-      "password": ""
+      "password": "",
+      "invite_code": "",
+      "show_request_invite_code_modal": false
     }
   },
   methods: {
@@ -75,7 +91,7 @@ export default {
         });
     },
     handle_register_button_press() {
-      register(this.username, this.password)
+      register(this.username, this.password, this.invite_code)
         .then(response => {
           toast.success("Registered successfully. you can now login.")
         })
