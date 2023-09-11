@@ -52,17 +52,20 @@ export default {
     handleConversationInput() {
       // @ts-ignore
       this.conversation.push({
-        conversation_element: {
-          role: "user",
-          message: this.userMessage
-        },
+        role: "user",
+        message: this.userMessage
       });
 
       converse(this.conversation_id, this.userMessage)
         .then(response => {
+          console.log(response);
           this.conversation_id = response.data.conversation_id
           // @ts-ignore
-          this.conversation.push(response.data.conversation[0])
+          this.conversation.push({
+            role: "system",
+            message: response.data.conversation_response,
+          });
+          console.log(response.data.conversation_response);
         });
     },
   },
