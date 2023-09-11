@@ -1,41 +1,49 @@
-<script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
-    </h3>
-  </div>
+    <va-navbar
+    color="warning"
+    class="mb-3"
+  >
+    <template #left>
+      <va-navbar-item class="logo">
+        FIA
+      </va-navbar-item>
+    </template>
+    <template #right>
+      <va-navbar-item>Home</va-navbar-item>
+      <va-navbar-item>About</va-navbar-item>
+      <va-navbar-item>Login/Register</va-navbar-item>
+      <va-navbar-item>Chat</va-navbar-item>
+      <va-navbar-item>Review</va-navbar-item>
+      <va-navbar-item>Conversations</va-navbar-item>
+      <va-navbar-item>
+        <va-icon
+          name="search"
+          color="textInverted"
+        />
+      </va-navbar-item>
+      <va-navbar-item>
+        <va-icon
+          name="person"
+          color="textInverted"
+        />
+      </va-navbar-item>
+    </template>
+  </va-navbar>
 </template>
 
+<script setup lang="ts">
+/** TODO:
+ * Add computed property to read the store and hide pages based on login status
+ * Make navbar-items RouterLinks
+ * Add actual logo
+ * Change color to match scheme
+ * Make the Person icon do some dropdown magic for login/profile related stuff
+ */
+</script>
+
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+.logo {
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 </style>
