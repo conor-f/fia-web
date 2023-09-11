@@ -18,19 +18,27 @@
         <RouterLink to="/about">About</RouterLink>
       </va-navbar-item>
 
-      <va-navbar-item>
+      <va-navbar-item
+        v-if="!authStore.isLoggedIn"
+        >
         <RouterLink to="/login">Login/Register</RouterLink>
       </va-navbar-item>
 
-      <va-navbar-item>
+      <va-navbar-item
+        v-if="authStore.isLoggedIn"
+        >
         <RouterLink to="/app-home">Chat</RouterLink>
       </va-navbar-item>
 
-      <va-navbar-item>
+      <va-navbar-item
+        v-if="authStore.isLoggedIn"
+        >
         <RouterLink to="/user-details">Review</RouterLink>
       </va-navbar-item>
 
-      <va-navbar-item>
+      <va-navbar-item
+        v-if="authStore.isLoggedIn"
+        >
         <RouterLink to="#">Conversations</RouterLink>
       </va-navbar-item>
 
@@ -52,10 +60,11 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { useAuthStore } from "@/stores/authStore"
+
+const authStore = useAuthStore()
 
 /** TODO:
- * Add computed property to read the store and hide pages based on login status
- * Make navbar-items RouterLinks
  * Add actual logo
  * Change color to match scheme
  * Make the Person icon do some dropdown magic for login/profile related stuff

@@ -13,4 +13,9 @@ export const useAuthStore = defineStore('authStore', {
       this.refreshToken = null;
     }
   },
+  getters: {
+    isLoggedIn() {
+      return !(this.accessToken == null && this.refreshToken == null);
+    },
+  },
 })
