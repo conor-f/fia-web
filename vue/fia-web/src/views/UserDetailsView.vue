@@ -1,21 +1,25 @@
 <template>
-  <div class="user-details-container">
-    <h1>This is a User Details page</h1>
+    <h3 class="mt-3" >
+      User Details Placeholder
+    </h3>
 
-    You've logged in {{ timesLoggedIn }} times.
+    <div class="mt-3 mb-3">
+      You've logged in {{ timesLoggedIn }} times.
+    </div>
 
-    <input
-      type="button"
+    <va-button
       @click="handleLogoutClick"
-      value="Logout"
-      />
-    <input
-      type="button"
+      class="mr-3"
+      >
+      Logout
+    </va-button>
+    <va-button
       @click="handleDeleteClick"
-      value="Delete Account"
-      />
-
-  </div>
+      color="danger"
+      class="ml-3"
+      >
+      Delete Account
+    </va-button>
 </template>
 
 <script lang="ts">
@@ -65,11 +69,4 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1024px) {
-  .user-details-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
 </style>
