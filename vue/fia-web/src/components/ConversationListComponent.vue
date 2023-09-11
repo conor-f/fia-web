@@ -1,25 +1,20 @@
 <template>
-  <div class="conversation-list">
-    <div
-      v-for="conversation in conversations"
+
+  <va-accordion v-model="expanded_list">
+    <va-collapse
+      v-for="(conversation, index) in conversations"
+      :key="index"
       :item="conversation"
-      :key="conversation"
+      :header="conversation.conversation_id"
       >
-      <!-- This is ugly but I don't want to fix type errors atm... -->
-      {{ // @ts-ignore
-      conversation.conversation_id }}
-      <input
-        type="button"
-        @click="// @ts-ignore
-        conversationButtonClickHandler(conversation.conversation_id)"
-        value="View"
-        />
-    </div>
-    <ConversationComponent
-      v-if="should_show_conversation_details"
-      :conversation_id="selected_conversation_id"
-      />
-  </div>
+      <div>
+        <ConversationComponent
+          :conversation_id="conversation.conversation_id"
+          />
+      </div>
+    </va-collapse>
+  </va-accordion>
+
 </template>
 
 <script lang="ts">
@@ -35,22 +30,18 @@ export default {
   },
   data: function() {
     return {
+      expanded_list: [],
       conversations: [],
-      selected_conversation_id: "",
-      should_show_conversation_details: false,
     };
   },
   created: function() {
     getConversationList()
       .then(response => {
-        this.conversations = response.data.conversations
+        this.conversations = response.data.conversations;
+        this.expanded_list = Array(this.conversations.length).fill(false);
       });
   },
   methods: {
-    conversationButtonClickHandler(conversation_id: string) {
-      this.selected_conversation_id = conversation_id
-      this.should_show_conversation_details = true
-    },
   }
 }
 </script>

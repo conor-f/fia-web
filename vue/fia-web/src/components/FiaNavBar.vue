@@ -39,7 +39,7 @@
       <va-navbar-item
         v-if="authStore.isLoggedIn"
         >
-        <RouterLink to="#">Conversations</RouterLink>
+        <RouterLink to="/previous-conversations">Conversations</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item>

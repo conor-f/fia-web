@@ -1,7 +1,5 @@
 <template>
   <div class="user-details-container">
-    <h1>This is the post-login homepage</h1>
-
     <h2>New Conversation</h2>
     <NewConversationComponent/>
 
