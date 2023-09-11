@@ -8,13 +8,32 @@
         FIA
       </va-navbar-item>
     </template>
+
     <template #right>
-      <va-navbar-item>Home</va-navbar-item>
-      <va-navbar-item>About</va-navbar-item>
-      <va-navbar-item>Login/Register</va-navbar-item>
-      <va-navbar-item>Chat</va-navbar-item>
-      <va-navbar-item>Review</va-navbar-item>
-      <va-navbar-item>Conversations</va-navbar-item>
+      <va-navbar-item>
+        <RouterLink to="/">Home</RouterLink>
+      </va-navbar-item>
+
+      <va-navbar-item>
+        <RouterLink to="/about">About</RouterLink>
+      </va-navbar-item>
+
+      <va-navbar-item>
+        <RouterLink to="/">Login/Register</RouterLink>
+      </va-navbar-item>
+
+      <va-navbar-item>
+        <RouterLink to="/">Chat</RouterLink>
+      </va-navbar-item>
+
+      <va-navbar-item>
+        <RouterLink to="/">Review</RouterLink>
+      </va-navbar-item>
+
+      <va-navbar-item>
+        <RouterLink to="/">Conversations</RouterLink>
+      </va-navbar-item>
+
       <va-navbar-item>
         <va-icon
           name="search"
@@ -32,6 +51,8 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
+
 /** TODO:
  * Add computed property to read the store and hide pages based on login status
  * Make navbar-items RouterLinks

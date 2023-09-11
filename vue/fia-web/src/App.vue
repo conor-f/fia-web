@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { RouterView } from 'vue-router'
+
 import FiaNavBar from './components/FiaNavBar.vue';
-import FiaHomepage from './views/FiaHomepage.vue';
 </script>
 
 <template>
   <FiaNavBar />
-  <FiaHomepage />
+  <RouterView />
 </template>
 
 <style scoped>
