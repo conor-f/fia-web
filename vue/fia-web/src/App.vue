@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import FiaNavBar from './components/FiaNavBar.vue';
-import FiaContentView from './views/FiaContentView.vue';
+import FiaHomepage from './views/FiaHomepage.vue';
 </script>
 
 <template>
   <FiaNavBar />
-  <FiaContentView />
+  <FiaHomepage />
 </template>
 
 <style scoped>
