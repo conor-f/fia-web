@@ -20,6 +20,7 @@
       <input
         type="password"
         id="password_input"
+        @keyup.enter="handle_login_button_press"
         v-model="password"
       />
     </div>
@@ -51,6 +52,7 @@
       <input
         class="mt-3"
         v-model="invite_code"
+        @keyup.enter="show_request_invite_code_modal=false; handle_register_button_press()"
       />
   </va-modal>
 </template>

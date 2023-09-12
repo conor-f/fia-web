@@ -11,16 +11,21 @@
         />
     </div>
 
-    <input
-      type="textarea"
-      size=60
-      v-model="userMessage"
-    />
-    <input
-      type="button"
-      @click="handleConversationInput"
-      value="Send"
-    />
+    <va-inner-loading :loading="response_loading">
+      <textarea
+        cols=60
+        rows=3
+        v-model="userMessage"
+        class="mt-5"
+        autofocus="true"
+        @keyup.enter="handleConversationInput"
+      />
+      <input
+        type="button"
+        @click="handleConversationInput"
+        value="Send"
+      />
+    </va-inner-loading>
   </div>
 </template>
 
@@ -41,6 +46,7 @@ export default {
       conversation: [],
       userMessage: "",
       conversation_id: "new",
+      response_loading: false,
     }
   },
   computed: {
@@ -50,22 +56,30 @@ export default {
   },
   methods: {
     handleConversationInput() {
+      this.response_loading = true;
+
+      const messageCopy = this.userMessage.slice();
+      this.userMessage = "";
+
       // @ts-ignore
       this.conversation.push({
         role: "user",
-        message: this.userMessage
+        message: messageCopy
       });
 
-      converse(this.conversation_id, this.userMessage)
+
+      converse(this.conversation_id, messageCopy)
         .then(response => {
+
           console.log(response);
           this.conversation_id = response.data.conversation_id
           // @ts-ignore
           this.conversation.push({
             role: "system",
             message: response.data.conversation_response,
+            learningMoments: response.data.learning_moments,
           });
-          console.log(response.data.conversation_response);
+          this.response_loading = false;
         });
     },
   },
@@ -73,4 +87,7 @@ export default {
 </script>
 
 <style scoped>
+textarea {
+  resize: none;
+}
 </style>
