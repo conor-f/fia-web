@@ -20,6 +20,7 @@
       <input
         type="password"
         id="password_input"
+        @keyup.enter="handle_login_button_press"
         v-model="password"
       />
     </div>
