@@ -3,67 +3,44 @@
       Review Flashcards
     </h3>
 
-    <div class="mt-3 mb-3">
-      You've logged in {{ timesLoggedIn }} times.
+    <div
+      v-for="(flashcard, index) in flashcards"
+      :key="index"
+      >
+      <Flashcard :item="flashcard" />
     </div>
-
-    <va-button
-      @click="handleLogoutClick"
-      class="mr-3"
-      >
-      Logout
-    </va-button>
-    <va-button
-      @click="handleDeleteClick"
-      color="danger"
-      class="ml-3"
-      >
-      Delete Account
-    </va-button>
 </template>
 
 <script lang="ts">
-import { getUserDetails, deleteAccount } from "@/utils/api"
+import { getFlashcards } from "@/utils/api"
 import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
+import Flashcard from "@/components/Flashcard.vue"
 
 const authStore = useAuthStore()
 
 
 export default {
   name: 'ReviewFlashcards',
+  components: {
+    Flashcard,
+  },
   data() {
     return {
-      "timesLoggedIn": 0,
+      "flashcards": [],
     }
   },
   created() {
-    getUserDetails()
+    getFlashcards()
       .then(response => {
-        this.timesLoggedIn = response["data"]["times_logged_in"];
+        console.log(response);
+        this.flashcards = response["data"]["flashcards"];
       })
       .catch(error => {
         console.log(error);
       });
   },
   methods: {
-    handleLogoutClick() {
-      authStore.clearTokens();
-      this.$router.push({ path: "/" });
-      toast.success("Logout successful");
-    },
-    handleDeleteClick() {
-      deleteAccount()
-        .then(response => {
-          authStore.clearTokens();
-          toast.success("Account deleted successfully");
-          this.$router.push({ path: "/" });
-        })
-        .catch(error => {
-          console.log(error);
-          toast.error("Account deletion failed. Let me know!");
-        });
-    },
   }
 }
 </script>

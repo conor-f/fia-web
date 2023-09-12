@@ -85,7 +85,6 @@ export function getConversationList() {
   });
 }
 
-
 export function getConversation(conversation_id: string) {
   return axios.get(
     API_BASE_URL + "user/get-conversation",
@@ -122,4 +121,27 @@ export function converse(conversation_id: string, message: string) {
       }
     }
   );
+}
+
+export function getFlashcards() {
+  return axios.get(
+    API_BASE_URL + "flashcards/get-flashcards",
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+      params: {
+        "only_due": true
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
 }
