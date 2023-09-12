@@ -11,10 +11,13 @@
         />
     </div>
 
-    <input
-      type="textarea"
-      size=60
+    <textarea
+      cols=60
+      rows=3
       v-model="userMessage"
+      class="mt-5"
+      autofocus="true"
+      @keyup.enter="handleConversationInput"
     />
     <input
       type="button"
@@ -58,6 +61,8 @@ export default {
 
       converse(this.conversation_id, this.userMessage)
         .then(response => {
+          this.userMessage = "";
+
           console.log(response);
           this.conversation_id = response.data.conversation_id
           // @ts-ignore
@@ -73,4 +78,7 @@ export default {
 </script>
 
 <style scoped>
+textarea {
+  resize: none;
+}
 </style>
