@@ -1,11 +1,11 @@
 <template>
   <div class="conversation-line">
-    <div v-if='item.conversation_element.role=="user"'>
-      <b>{{ item.conversation_element.role }}: </b> {{ item.conversation_element.message }}
+    <div v-if='item.role=="user"'>
+      <b>{{ item.role }}: </b> {{ item.message }}
     </div>
 
     <div v-else>
-      <b>{{ item.conversation_element.role }}: </b> {{ item.conversation_element.response.conversation_response }}
+      <b>{{ item.role }}: </b> {{ item.message }}
     </div>
   </div>
 </template>

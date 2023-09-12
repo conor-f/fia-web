@@ -5,9 +5,9 @@
     </h3>
 
     <ConversationLine
-      v-for="conversationLine in conversation"
+      v-for="(conversationLine, index) in conversation"
       :item="conversationLine"
-      :key="conversationLine"
+      :key="String(conversation_id) + ':' + String(index)"
       />
   </div>
 </template>
