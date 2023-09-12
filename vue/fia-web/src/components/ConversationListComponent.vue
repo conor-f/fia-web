@@ -5,11 +5,11 @@
       v-for="(conversation, index) in conversations"
       :key="index"
       :item="conversation"
-      :header="conversation.conversation_id"
+      :header="(conversation as any).conversation_id"
       >
       <div>
         <ConversationComponent
-          :conversation_id="conversation.conversation_id"
+          :conversation_id="(conversation as any).conversation_id"
           />
       </div>
     </va-collapse>
@@ -30,15 +30,18 @@ export default {
   },
   data: function() {
     return {
-      expanded_list: [],
       conversations: [],
     };
+  },
+  computed: {
+    expanded_list() {
+      return Array(this.conversations.length).fill(false);
+    },
   },
   created: function() {
     getConversationList()
       .then(response => {
         this.conversations = response.data.conversations;
-        this.expanded_list = Array(this.conversations.length).fill(false);
       });
   },
   methods: {

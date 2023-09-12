@@ -91,7 +91,8 @@ export default {
         });
     },
     handle_register_button_press() {
-      register(this.username, this.password, this.invite_code)
+      // TODO: Handle invite code.
+      register(this.username, this.password)
         .then(response => {
           toast.success("Registered successfully. you can now login.")
         })

@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('authStore', {
     }
   },
   getters: {
-    isLoggedIn() {
+    isLoggedIn(): boolean {
       return !(this.accessToken == null && this.refreshToken == null);
     },
   },
