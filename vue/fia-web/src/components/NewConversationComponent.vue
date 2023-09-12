@@ -77,8 +77,8 @@ export default {
           this.conversation.push({
             role: "system",
             message: response.data.conversation_response,
+            learningMoments: response.data.learning_moments,
           });
-          console.log(response.data.conversation_response);
           this.response_loading = false;
         });
     },

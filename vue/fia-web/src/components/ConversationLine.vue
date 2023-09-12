@@ -5,6 +5,18 @@
     </div>
 
     <div v-else>
+      <div>
+        <br/>
+        <div
+          v-for="(learningMoment, index) in item.learningMoments.learning_moments"
+          :key="index">
+          <span style="color:red"> {{ learningMoment.moment.incorrect_section }} </span> -> <span style="color:green"> {{ learningMoment.moment.corrected_section }} </span>
+          <br/>
+          Explanation: {{ learningMoment.moment.explanation }}
+          <br/>
+          <br/>
+        </div>
+      </div>
       <b>{{ item.role }}: </b> {{ item.message }}
     </div>
   </div>
