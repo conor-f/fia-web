@@ -33,7 +33,6 @@ export default {
   created() {
     getFlashcards()
       .then(response => {
-        console.log(response);
         this.flashcards = response["data"]["flashcards"];
       })
       .catch(error => {

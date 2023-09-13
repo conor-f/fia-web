@@ -17,11 +17,18 @@
     >
     {{ item.back }}
     <va-button @click="should_show_front=!should_show_front">Flip</va-button>
+    <br/>
+    <va-button @click="updateFlashcard(0)">Didn't Know</va-button>
+    <va-button @click="updateFlashcard(1)">Hard to Remember</va-button>
+    <va-button @click="updateFlashcard(2)">Remembered</va-button>
+    <va-button @click="updateFlashcard(3)">Too Easy</va-button>
   </va-card>
 
 </template>
 
 <script lang="ts">
+import { updateFlashcard } from "@/utils/api"
+
 export default {
   name: 'Flashcard',
   props: [
@@ -33,7 +40,12 @@ export default {
     }
   },
   methods: {
-    // TODO: Implement card feedback
+    updateFlashcard(ease: number) {
+      updateFlashcard(this.item.id, ease)
+        .catch(error => {
+          console.log(error);
+        });
+    },
   },
 }
 </script>

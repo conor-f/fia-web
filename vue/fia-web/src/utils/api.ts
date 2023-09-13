@@ -145,3 +145,27 @@ export function getFlashcards() {
     throw error;
   });
 }
+
+export function updateFlashcard(id: number, ease: number) {
+  return axios.post(
+    API_BASE_URL + "flashcards/update-flashcard",
+    {
+      id,
+      ease,
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      console.log("Should redirect here...");
+      // this.router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
