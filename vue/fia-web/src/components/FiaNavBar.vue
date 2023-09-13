@@ -33,7 +33,7 @@
       <va-navbar-item
         v-if="authStore.isLoggedIn"
         >
-        <RouterLink to="/user-details">Review</RouterLink>
+        <RouterLink to="/flashcards">Review</RouterLink>
       </va-navbar-item>
 
       <va-navbar-item
@@ -49,10 +49,12 @@
         />
       </va-navbar-item>
       <va-navbar-item>
+        <RouterLink to="/user-details">
         <va-icon
           name="person"
           color="textInverted"
-        />
+          />
+        </RouterLink>
       </va-navbar-item>
     </template>
   </va-navbar>
