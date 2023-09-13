@@ -70,8 +70,6 @@ export default {
 
       converse(this.conversation_id, messageCopy)
         .then(response => {
-
-          console.log(response);
           this.conversation_id = response.data.conversation_id
           // @ts-ignore
           this.conversation.push({
