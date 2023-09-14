@@ -1,9 +1,7 @@
 <template>
   <div class="conversation-line">
-    {{ this.updated_item }}
-    {{ hasLearningMoments }}
     <div
-      v-if='updated_item.role=="user"'
+      v-if='item.role=="user"'
       class="user-flex-container"
       >
       <div class="message user-message">
@@ -13,13 +11,13 @@
           >
           <va-card-title>You:</va-card-title>
           <va-card-content>
-            {{ updated_item.message }}
+            {{ item.message }}
           </va-card-content>
         </va-card>
       </div>
       <div v-if="hasLearningMoments" class="message learning-message">
         <va-card
-          v-for="(moment, index) in updated_item.learning_moments"
+          v-for="(moment, index) in item.learning_moments"
           :key="index"
           color="warning"
           gradient
@@ -46,7 +44,7 @@
           >
           <va-card-title>System:</va-card-title>
           <va-card-content>
-            {{ updated_item.message }}
+            {{ item.message }}
           </va-card-content>
         </va-card>
       </div>
@@ -60,24 +58,15 @@ export default {
   props: [
     "item"
   ],
-  data() {
-    return {
-      updated_item: this.item
-    }
-  },
   computed: {
     hasLearningMoments: function() {
-      if (Object.hasOwn(this.updated_item, "learning_moments") &&
-        this.updated_item.learning_moments) {
+      // @ts-ignore
+      if (Object.hasOwn(this.item, "learning_moments") &&
+        this.item.learning_moments) {
         return true;
       }
 
       return false;
-    },
-  },
-  watch: {
-    item: function(newVal, oldVal) {
-      this.update_item = newVal;
     },
   },
 }

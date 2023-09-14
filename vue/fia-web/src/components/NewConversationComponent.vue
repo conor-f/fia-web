@@ -71,7 +71,8 @@ export default {
       converse(this.conversation_id, messageCopy)
         .then(response => {
           this.conversation_id = response.data.conversation_id
-          this.conversation[this.conversation.length - 1].learning_moments = response.data.learning_moments.learning_moments
+          // @ts-ignore
+          this.conversation[this.conversation.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
 
           // @ts-ignore
           this.conversation.push({
