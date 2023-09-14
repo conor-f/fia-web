@@ -70,15 +70,16 @@ export default {
 
       converse(this.conversation_id, messageCopy)
         .then(response => {
-
-          console.log(response);
           this.conversation_id = response.data.conversation_id
+          // @ts-ignore
+          this.conversation[this.conversation.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
+
           // @ts-ignore
           this.conversation.push({
             role: "system",
             message: response.data.conversation_response,
-            learningMoments: response.data.learning_moments,
           });
+
           this.response_loading = false;
         });
     },
