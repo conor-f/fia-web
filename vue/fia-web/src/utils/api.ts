@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
-export const API_BASE_URL = "http://localhost:8000/api/"
+export const API_BASE_URL = "https://fia-api.randombits.host/api/"
 
 
 function getAuthenticatedRequest(axiosDetails: object) {
