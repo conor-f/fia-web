@@ -25,21 +25,54 @@
         @click="handleConversationInput"
         value="Send"
       />
+      <VueVoiceRecording @getAsMp3="gotMP3"></VueVoiceRecording>
     </va-inner-loading>
   </div>
+  <slot
+      :isRecording="isRecording"
+      :isPaused="isPaused"
+      :recordingTime="recordingTime"
+      :recordingState="recordingState"
+      :toggleStartAndStop="toggleStartAndStop"
+      :togglePauseAndResume="togglePauseAndResume"
+      :startRecording="startRecording"
+      :stopRecording="stopRecording"
+      :pauseRecording="pauseRecording"
+      :resumeRecording="resumeRecording"
+  >
+  <span v-if="isRecording">Rec</span>
+  <span v-else>Not</span>
+  </slot>
 </template>
 
 <script lang="ts">
-import { getConversation, converse } from "@/utils/api"
+import { getConversation, converse, converseWithAudio } from "@/utils/api"
+import { VueVoiceRecording } from "vue-voice-recording";
+import 'vue-voice-recording/dist/style.css';
 import { toast } from "vue-sonner"
 
 import ConversationLine from "@/components/ConversationLine.vue"
+
+import { ref, onMounted } from "vue";
+import { useRecorder} from "vue-voice-recording";
+
+const {
+  isRecording,
+  toggleStartAndStop,
+} = useRecorder({
+  afterStartRecording: () => console.log("a"),
+  afterStopRecording: (blob) => console.log("b"),
+  afterPauseRecording: () => console.log("c"),
+  afterResumeRecording: () => console.log("d"),
+  getAsMp3: (value) => console.log("e"),
+});
 
 
 export default {
   name: 'NewConversationComponent',
   components: {
-    ConversationLine
+    ConversationLine,
+    VueVoiceRecording,
   },
   data: function() {
     return {
@@ -83,6 +116,31 @@ export default {
           this.response_loading = false;
         });
     },
+    handlAudioInput(audioInput) {
+      this.response_loading = true;
+
+      converseWithAudio(this.conversation_id, audioInput.data)
+        .then(response => {
+          this.conversation_id = response.data.conversation_id
+
+          // @ts-ignore
+          this.conversation.push({
+            role: "user",
+            message: response.data.input_message,
+          });
+
+          // @ts-ignore
+          this.conversation[this.conversation.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
+
+          // @ts-ignore
+          this.conversation.push({
+            role: "system",
+            message: response.data.conversation_response,
+          });
+
+          this.response_loading = false;
+        });
+    },
   },
 }
 </script>
@@ -90,5 +148,11 @@ export default {
 <style scoped>
 textarea {
   resize: none;
+}
+
+.voice-recorder {
+  height: 100px;
+  width: 100px;
+  margin: auto auto;
 }
 </style>

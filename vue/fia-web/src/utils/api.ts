@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
-export const API_BASE_URL = "https://fia-api.randombits.host/api/"
+export const API_BASE_URL = "http://localhost:8000/api/"
 
 
 function getAuthenticatedRequest(axiosDetails: object) {
@@ -119,6 +119,22 @@ export function converse(conversation_id: string, message: string) {
       headers: {
         "Authorization": "Bearer " + authStore.accessToken
       }
+    }
+  );
+}
+
+export function converseWithAudio(conversation_id: string, audio_file: Blob) {
+  // TODO: This is a mess...
+  return axios.post(
+    API_BASE_URL + "teacher/converse-with-audio?conversation_id=" + conversation_id,
+    {
+      audio_file: audio_file
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken,
+        "Content-Type": "multipart/form-data"
+      },
     }
   );
 }
