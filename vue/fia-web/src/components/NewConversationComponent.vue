@@ -1,3 +1,92 @@
+<script lang="ts">
+import { getConversation, converse, converseWithAudio } from "@/utils/api"
+import VueVoiceRecording from "vue-voice-recording";
+import 'vue-voice-recording/dist/style.css';
+import { toast } from "vue-sonner"
+
+import ConversationLine from "@/components/ConversationLine.vue"
+
+import { ref, computed, onMounted } from "vue";
+import { useRecorder } from "vue-voice-recording";
+
+const {
+  isRecording,
+  toggleStartAndStop,
+} = useRecorder({
+  afterStartRecording: () => console.log("a"),
+  afterStopRecording: (blob) => console.log("b"),
+  afterPauseRecording: () => console.log("c"),
+  afterResumeRecording: () => console.log("d"),
+  getAsMp3: (value) => console.log("e"),
+});
+
+
+const conversation = ref([]);
+const userMessage = ref("");
+const conversation_id = ref("new");
+const response_loading = ref(false);
+
+const isActiveConversation = computed(() => {
+    return conversation_id.value != "new";
+})
+
+function handleConversationInput() {
+  response_loading.value = true;
+
+  const messageCopy = userMessage.value.slice();
+  userMessage.value = "";
+
+  // @ts-ignore
+  this.conversation.value.push({
+    role: "user",
+    message: messageCopy
+  });
+
+
+  converse(conversation_id, messageCopy)
+    .then(response => {
+      conversation_id.value = response.data.conversation_id
+      // @ts-ignore
+      conversation.value[conversation.value.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
+
+      // @ts-ignore
+      conversation.value.push({
+        role: "system",
+        message: response.data.conversation_response,
+      });
+
+      response_loading.value = false;
+    });
+}
+
+
+function handlAudioInput(audioInput) {
+  response_loading.value = true;
+
+  converseWithAudio(conversation_id, audioInput.data)
+    .then(response => {
+      conversation_id.value = response.data.conversation_id
+
+      // @ts-ignore
+      conversation.value.push({
+        role: "user",
+        message: response.data.input_message,
+      });
+
+      // @ts-ignore
+      conversation.value[conversation.value.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
+
+      // @ts-ignore
+      conversation.value.push({
+        role: "system",
+        message: response.data.conversation_response,
+      });
+
+      response_loading.value = false;
+    });
+}
+</script>
+
 <template>
   <div class="conversation">
     <div v-if="! isActiveConversation">
@@ -40,110 +129,10 @@
       :pauseRecording="pauseRecording"
       :resumeRecording="resumeRecording"
   >
-  <span v-if="isRecording">Rec</span>
-  <span v-else>Not</span>
+    <span v-if="isRecording">Rec</span>
+    <span v-else>Not</span>
   </slot>
 </template>
-
-<script lang="ts">
-import { getConversation, converse, converseWithAudio } from "@/utils/api"
-import { VueVoiceRecording } from "vue-voice-recording";
-import 'vue-voice-recording/dist/style.css';
-import { toast } from "vue-sonner"
-
-import ConversationLine from "@/components/ConversationLine.vue"
-
-import { ref, onMounted } from "vue";
-import { useRecorder} from "vue-voice-recording";
-
-const {
-  isRecording,
-  toggleStartAndStop,
-} = useRecorder({
-  afterStartRecording: () => console.log("a"),
-  afterStopRecording: (blob) => console.log("b"),
-  afterPauseRecording: () => console.log("c"),
-  afterResumeRecording: () => console.log("d"),
-  getAsMp3: (value) => console.log("e"),
-});
-
-
-export default {
-  name: 'NewConversationComponent',
-  components: {
-    ConversationLine,
-    VueVoiceRecording,
-  },
-  data: function() {
-    return {
-      conversation: [],
-      userMessage: "",
-      conversation_id: "new",
-      response_loading: false,
-    }
-  },
-  computed: {
-    isActiveConversation: function() {
-      return this.conversation_id != "new";
-    },
-  },
-  methods: {
-    handleConversationInput() {
-      this.response_loading = true;
-
-      const messageCopy = this.userMessage.slice();
-      this.userMessage = "";
-
-      // @ts-ignore
-      this.conversation.push({
-        role: "user",
-        message: messageCopy
-      });
-
-
-      converse(this.conversation_id, messageCopy)
-        .then(response => {
-          this.conversation_id = response.data.conversation_id
-          // @ts-ignore
-          this.conversation[this.conversation.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
-
-          // @ts-ignore
-          this.conversation.push({
-            role: "system",
-            message: response.data.conversation_response,
-          });
-
-          this.response_loading = false;
-        });
-    },
-    handlAudioInput(audioInput) {
-      this.response_loading = true;
-
-      converseWithAudio(this.conversation_id, audioInput.data)
-        .then(response => {
-          this.conversation_id = response.data.conversation_id
-
-          // @ts-ignore
-          this.conversation.push({
-            role: "user",
-            message: response.data.input_message,
-          });
-
-          // @ts-ignore
-          this.conversation[this.conversation.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
-
-          // @ts-ignore
-          this.conversation.push({
-            role: "system",
-            message: response.data.conversation_response,
-          });
-
-          this.response_loading = false;
-        });
-    },
-  },
-}
-</script>
 
 <style scoped>
 textarea {
