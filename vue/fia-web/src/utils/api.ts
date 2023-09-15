@@ -123,6 +123,22 @@ export function converse(conversation_id: string, message: string) {
   );
 }
 
+export function converseWithAudio(conversation_id: string, audio_file: Blob) {
+  // TODO: This is a mess...
+  return axios.post(
+    API_BASE_URL + "teacher/converse-with-audio?conversation_id=" + conversation_id,
+    {
+      audio_file: audio_file
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken,
+        "Content-Type": "multipart/form-data"
+      },
+    }
+  );
+}
+
 export function getFlashcards() {
   return axios.get(
     API_BASE_URL + "flashcards/get-flashcards",
