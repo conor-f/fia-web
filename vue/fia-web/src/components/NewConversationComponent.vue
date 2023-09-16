@@ -13,13 +13,23 @@
 
     <va-inner-loading :loading="response_loading">
       <textarea
-        cols=60
+        cols=40
         rows=3
         v-model="userMessage"
         class="mt-5"
         autofocus="true"
         @keyup.enter="handleConversationInput"
       />
+      <span>
+        <va-icon name="mic" size="2rem" @click="toggleStartAndStop"/>
+
+        <span v-if="isRecording">
+          <svg height="80" width="80" class="blinking">
+            <circle cx="50" cy="50" r="10" fill="red" />
+            Sorry, your browser does not support inline SVG.
+          </svg>
+        </span>
+      </span>
       <input
         type="button"
         @click="handleConversationInput"
@@ -28,15 +38,6 @@
     </va-inner-loading>
   </div>
 
-  <div class="voice-recorder">
-    <va-icon name="mic" @click="toggleStartAndStop"/>
-    <span v-if="isRecording">
-      <svg height="100" width="100" class="blinking">
-        <circle cx="50" cy="50" r="10" fill="red" />
-        Sorry, your browser does not support inline SVG.
-      </svg>
-    </span>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -74,14 +75,14 @@ function handleConversationInput() {
   userMessage.value = "";
 
   // @ts-ignore
-  this.conversation.value.push({
+  conversation.value.push({
     role: "user",
     message: messageCopy
   });
 
 
   // @ts-ignore
-  converse(conversation_id, messageCopy)
+  converse(conversation_id.value, messageCopy)
     .then(response => {
       conversation_id.value = response.data.conversation_id
       // @ts-ignore
@@ -92,8 +93,9 @@ function handleConversationInput() {
         role: "system",
         message: response.data.conversation_response,
       });
-
-      response_loading.value = false;
+    })
+    .finally(() => {
+      response_loading.value = false
     });
 }
 
@@ -120,8 +122,9 @@ function handleAudioInput(audioInput) {
         role: "system",
         message: response.data.conversation_response,
       });
-
-      response_loading.value = false;
+    })
+    .finally(() => {
+      response_loading.value = false
     });
 }
 </script>
@@ -129,12 +132,6 @@ function handleAudioInput(audioInput) {
 <style scoped>
 textarea {
   resize: none;
-}
-
-.voice-recorder {
-  height: 100px;
-  width: 100px;
-  margin: auto auto;
 }
 
 /* BEGIN Record animation */
