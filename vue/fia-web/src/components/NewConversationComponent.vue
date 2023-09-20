@@ -37,7 +37,6 @@
       />
     </va-inner-loading>
   </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -68,7 +67,12 @@ const isActiveConversation = computed(() => {
     return conversation_id.value != "new";
 })
 
-function handleConversationInput() {
+function handleConversationInput(event) {
+  // shift + enter is common for new line.
+  if (event.shiftKey) {
+    return;
+  }
+
   response_loading.value = true;
 
   const messageCopy = userMessage.value.slice();

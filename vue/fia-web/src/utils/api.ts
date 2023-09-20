@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
+import router from "@/router/index.ts"
 
 const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
@@ -43,8 +44,7 @@ export function getUserDetails() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -75,8 +75,7 @@ export function getConversationList() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -98,8 +97,7 @@ export function getConversation(conversation_id: string) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -152,8 +150,7 @@ export function getFlashcards() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -176,8 +173,7 @@ export function updateFlashcard(id: number, ease: number) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
