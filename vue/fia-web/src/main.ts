@@ -6,6 +6,17 @@ import { createVuestic, createIconsConfig } from 'vuestic-ui';
 import "vuestic-ui/css";
 import "material-design-icons-iconfont/dist/material-design-icons.min.css";
 
+import { initializeFaro } from '@grafana/faro-web-sdk';
+
+const faro = initializeFaro({
+  url: 'https://grafana-agent.randombits.host/collect',
+  app: {
+    name: 'frontend',
+    version: '1.0.0',
+  },
+});
+
+
 import App from './App.vue'
 import router from './router'
 
