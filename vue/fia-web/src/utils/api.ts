@@ -44,6 +44,7 @@ export function getUserDetails() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
+      authStore.clearTokens();
       router.push({ path: "/" });
     } else {
       console.log(error);
@@ -75,6 +76,7 @@ export function getConversationList() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
+      authStore.clearTokens();
       router.push({ path: "/" });
     } else {
       console.log(error);
@@ -97,6 +99,7 @@ export function getConversation(conversation_id: string) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
+      authStore.clearTokens();
       router.push({ path: "/" });
     } else {
       console.log(error);
@@ -150,6 +153,7 @@ export function getFlashcards() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
+      authStore.clearTokens();
       router.push({ path: "/" });
     } else {
       console.log(error);
@@ -173,6 +177,7 @@ export function updateFlashcard(id: number, ease: number) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
+      authStore.clearTokens();
       router.push({ path: "/" });
     } else {
       console.log(error);

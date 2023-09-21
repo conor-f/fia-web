@@ -1,4 +1,6 @@
 <template>
+  {{ translatedSelection }}
+
   <div class="conversation">
     <div v-if="! isActiveConversation">
       Welcome! Start a new conversation :)
@@ -49,6 +51,11 @@ import { ref, computed, onMounted } from "vue";
 // @ts-ignore
 import { useRecorder } from "vue-voice-recording";
 
+import { useTextSelection } from '@vueuse/core';
+import translate from "translate";
+translate.engine = "deepl";
+translate.key = import.meta.env.VITE_DEEPL_API_KEY;
+
 const {
   isRecording,
   toggleStartAndStop,
@@ -62,10 +69,23 @@ const conversation = ref([]);
 const userMessage = ref("");
 const conversation_id = ref("new");
 const response_loading = ref(false);
+const translatedSelection = ref("");
 
 const isActiveConversation = computed(() => {
     return conversation_id.value != "new";
 })
+
+window.addEventListener("mouseup", function() {
+  if (selectedText.text.value != "") {
+    translate(selectedText.text.value, "de").then((value) => {
+      translatedSelection.value = value;
+    });
+  } else {
+    translatedSelection.value = "";
+  }
+})
+
+const selectedText = useTextSelection()
 
 function handleConversationInput(event) {
   // shift + enter is common for new line.
