@@ -1,6 +1,4 @@
 <template>
-  {{ translatedSelection }}
-
   <div class="conversation">
     <div v-if="! isActiveConversation">
       Welcome! Start a new conversation :)
@@ -39,6 +37,15 @@
       />
     </va-inner-loading>
   </div>
+
+  <!-- Should be extracted to a new component -->
+  <va-modal
+    v-model="shouldShowTranslationModal"
+    :message="translatedSelection"
+    size="small"
+    hideDefaultActions="true"
+  />
+
 </template>
 
 <script lang="ts" setup>
@@ -70,6 +77,7 @@ const userMessage = ref("");
 const conversation_id = ref("new");
 const response_loading = ref(false);
 const translatedSelection = ref("");
+const shouldShowTranslationModal = ref(false);
 
 const isActiveConversation = computed(() => {
     return conversation_id.value != "new";
@@ -79,6 +87,7 @@ window.addEventListener("mouseup", function() {
   if (selectedText.text.value != "") {
     translate(selectedText.text.value, "de").then((value) => {
       translatedSelection.value = value;
+      shouldShowTranslationModal.value = true;
     });
   } else {
     translatedSelection.value = "";
