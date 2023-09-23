@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
-import router from "@/router/index.ts"
+import router from "@/router/index"
 
 const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"

@@ -43,7 +43,7 @@
     v-model="shouldShowTranslationModal"
     :message="translatedSelection"
     size="small"
-    hideDefaultActions="true"
+    hideDefaultActions
   />
 
 </template>
@@ -60,7 +60,10 @@ import { useRecorder } from "vue-voice-recording";
 
 import { useTextSelection } from '@vueuse/core';
 import translate from "translate";
+
+// @ts-ignore
 translate.engine = "deepl";
+// @ts-ignore
 translate.key = import.meta.env.VITE_DEEPL_API_KEY;
 
 const {
@@ -96,7 +99,7 @@ window.addEventListener("mouseup", function() {
 
 const selectedText = useTextSelection()
 
-function handleConversationInput(event) {
+function handleConversationInput(event: any) {
   // shift + enter is common for new line.
   if (event.shiftKey) {
     return;
