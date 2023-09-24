@@ -3,6 +3,7 @@ import { Toaster } from "vue-sonner"
 import { RouterView } from 'vue-router'
 
 import FiaNavBar from './components/FiaNavBar.vue';
+import { faro } from '@grafana/faro-web-sdk';
 </script>
 
 <template>
