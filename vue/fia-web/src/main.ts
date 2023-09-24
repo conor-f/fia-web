@@ -6,14 +6,24 @@ import { createVuestic, createIconsConfig } from 'vuestic-ui';
 import "vuestic-ui/css";
 import "material-design-icons-iconfont/dist/material-design-icons.min.css";
 
-import { initializeFaro } from '@grafana/faro-web-sdk';
+import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
+import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 
-const faro = initializeFaro({
-  url: 'https://grafana-agent.randombits.host/collect',
+var faro = initializeFaro({
+  url: 'https://faro-collector-prod-eu-west-2.grafana.net/collect/c48c99765af94fbe0e6d6fc42c7e0b5f',
   app: {
-    name: 'frontend',
+    name: 'Fia',
     version: '1.0.0',
+    environment: 'production'
   },
+  instrumentations: [
+    // Mandatory, overwriting the instrumentations array would cause the default instrumentations to be omitted
+    ...getWebInstrumentations(),
+
+    // Initialization of the tracing package.
+    // This packages is optional because it increases the bundle size noticeably. Only add it if you want tracing data.
+    new TracingInstrumentation(),
+  ],
 });
 
 
