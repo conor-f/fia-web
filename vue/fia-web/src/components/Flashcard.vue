@@ -22,7 +22,7 @@
     <va-button @click="updateFlashcard(1)">Hard to Remember</va-button>
     <va-button @click="updateFlashcard(2)">Remembered</va-button>
     <va-button @click="updateFlashcard(3)">Too Easy</va-button>
-    <va-button @click="deleteFlashcard(3)">Irrelevant</va-button>
+    <va-button @click="deleteFlashcard()">Irrelevant</va-button>
   </va-card>
 </template>
 

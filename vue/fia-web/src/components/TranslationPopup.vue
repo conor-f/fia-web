@@ -17,8 +17,8 @@ import translate from "translate";
 import { createFlashcard } from "@/utils/api"
 
 const props = defineProps({
+  conversationID: String,
   selectedText: String,
-  conversationID: Number,
 })
 
 
@@ -35,6 +35,7 @@ watchEffect(() => {
     let outputLang = "en";
 
     // TODO: Support more robust language switching:
+    // @ts-ignore
     for (let langConfidence of detectAll(props.selectedText)) {
       if (langConfidence.lang == "en") {
         inputLang = "en";
@@ -47,6 +48,7 @@ watchEffect(() => {
       }
     }
 
+    // @ts-ignore
     translate(props.selectedText, {
       from: inputLang,
       to: outputLang,
@@ -60,6 +62,7 @@ watchEffect(() => {
 
 function createFlashcardClickHandler() {
   createFlashcard(
+    // @ts-ignore
     props.conversationID,
     props.selectedText,
     translatedSelection.value,
