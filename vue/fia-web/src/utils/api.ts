@@ -209,3 +209,34 @@ export function deleteFlashcard(id: number) {
     throw error;
   });
 }
+
+export function createFlashcard(
+  conversation_id: string,
+  front: string,
+  back: string,
+  both_sides: boolean,
+) {
+  return axios.post(
+    API_BASE_URL + "flashcards/create-flashcard",
+    {
+      conversation_id,
+      front,
+      back,
+      both_sides
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}

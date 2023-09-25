@@ -41,6 +41,7 @@
   <TranslationPopup
     v-if="shouldShowTranslation"
     :selected-text="selectedText.text.value"
+    :conversation-ID="conversation_id"
     >
   </TranslationPopup>
 </template>

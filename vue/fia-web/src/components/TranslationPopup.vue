@@ -1,6 +1,10 @@
 <template>
   <div>
     TRANSLATION: {{ translatedSelection }}
+    <va-button @click="createFlashcardClickHandler">
+      Create Flashcard
+    </va-button>
+
   </div>
 </template>
 
@@ -10,6 +14,7 @@ import { ref, computed, watchEffect } from "vue";
 import { useTextSelection } from '@vueuse/core';
 import { detect, detectAll } from 'tinyld/heavy';
 import translate from "translate";
+import { createFlashcard } from "@/utils/api"
 
 const props = defineProps({
   selectedText: String,
@@ -52,6 +57,15 @@ watchEffect(() => {
     translatedSelection.value = "";
   }
 })
+
+function createFlashcardClickHandler() {
+  createFlashcard(
+    props.conversationID,
+    props.selectedText,
+    translatedSelection.value,
+    true
+  )
+}
 </script>
 
 <style scoped>
