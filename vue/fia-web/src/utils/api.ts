@@ -186,3 +186,26 @@ export function updateFlashcard(id: number, ease: number) {
     throw error;
   });
 }
+
+export function deleteFlashcard(id: number) {
+  return axios.post(
+    API_BASE_URL + "flashcards/delete-flashcard",
+    {
+      id,
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
