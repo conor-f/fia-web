@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, computed, watchEffect } from "vue";
 
 import { useTextSelection } from '@vueuse/core';
+import { detect, detectAll } from 'tinyld/heavy';
 import translate from "translate";
 
 const props = defineProps({
@@ -15,8 +16,6 @@ const props = defineProps({
   conversationID: Number,
 })
 
-console.log("HERE");
-console.log(props.selectedText);
 
 // @ts-ignore
 translate.engine = "deepl";
@@ -25,21 +24,34 @@ translate.key = import.meta.env.VITE_DEEPL_API_KEY;
 
 const translatedSelection = ref("");
 
-watch(props, async () => {
-  console.log("Running watcher...");
-  console.log("selectedText is " + props.selectedText);
-
+watchEffect(() => {
   if (props.selectedText != "") {
-    translate(props.selectedText, "de").then((value) => {
-      console.log(value);
+    let inputLang = "de";
+    let outputLang = "en";
+
+    // TODO: Support more robust language switching:
+    for (let langConfidence of detectAll(props.selectedText)) {
+      if (langConfidence.lang == "en") {
+        inputLang = "en";
+        outputLang = "de";
+        break;
+      } else if (langConfidence.lang == "de") {
+        inputLang = "de";
+        outputLang = "en";
+        break;
+      }
+    }
+
+    translate(props.selectedText, {
+      from: inputLang,
+      to: outputLang,
+    }).then((value) => {
       translatedSelection.value = value;
     });
   } else {
     translatedSelection.value = "";
   }
 })
-
-const selectedText = useTextSelection()
 </script>
 
 <style scoped>
