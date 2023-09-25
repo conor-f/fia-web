@@ -38,33 +38,24 @@
     </va-inner-loading>
   </div>
 
-  <!-- Should be extracted to a new component -->
-  <va-modal
-    v-model="shouldShowTranslationModal"
-    :message="translatedSelection"
-    size="small"
-    hideDefaultActions
-  />
-
+  <TranslationPopup
+    v-if="shouldShowTranslation"
+    :selected-text="selectedText.text.value"
+    >
+  </TranslationPopup>
 </template>
 
 <script lang="ts" setup>
 import { getConversation, converse, converseWithAudio } from "@/utils/api"
-import { toast } from "vue-sonner"
 
 import ConversationLine from "@/components/ConversationLine.vue"
+import TranslationPopup from "@/components/TranslationPopup.vue"
 
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 // @ts-ignore
 import { useRecorder } from "vue-voice-recording";
 
 import { useTextSelection } from '@vueuse/core';
-import translate from "translate";
-
-// @ts-ignore
-translate.engine = "deepl";
-// @ts-ignore
-translate.key = import.meta.env.VITE_DEEPL_API_KEY;
 
 const {
   isRecording,
@@ -74,30 +65,19 @@ const {
   getAsMp3: (value) => handleAudioInput(value),
 });
 
-
 const conversation = ref([]);
 const userMessage = ref("");
 const conversation_id = ref("new");
 const response_loading = ref(false);
-const translatedSelection = ref("");
-const shouldShowTranslationModal = ref(false);
+const selectedText = useTextSelection()
 
 const isActiveConversation = computed(() => {
     return conversation_id.value != "new";
 })
 
-window.addEventListener("mouseup", function() {
-  if (selectedText.text.value != "") {
-    translate(selectedText.text.value, "de").then((value) => {
-      translatedSelection.value = value;
-      shouldShowTranslationModal.value = true;
-    });
-  } else {
-    translatedSelection.value = "";
-  }
+const shouldShowTranslation = computed(() => {
+  return selectedText.text.value != "";
 })
-
-const selectedText = useTextSelection()
 
 function handleConversationInput(event: any) {
   // shift + enter is common for new line.
@@ -134,7 +114,6 @@ function handleConversationInput(event: any) {
       response_loading.value = false
     });
 }
-
 
 // @ts-ignore
 function handleAudioInput(audioInput) {
