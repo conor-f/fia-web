@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
+import router from "@/router/index"
 
 const authStore = useAuthStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
@@ -43,8 +44,8 @@ export function getUserDetails() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      authStore.clearTokens();
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -75,8 +76,8 @@ export function getConversationList() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      authStore.clearTokens();
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -98,8 +99,8 @@ export function getConversation(conversation_id: string) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      authStore.clearTokens();
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -152,8 +153,8 @@ export function getFlashcards() {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      authStore.clearTokens();
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
@@ -176,8 +177,62 @@ export function updateFlashcard(id: number, ease: number) {
     }
   ).catch(error => {
     if (error.response.status == 403) {
-      console.log("Should redirect here...");
-      // this.router.push({ path: "/" });
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
+export function deleteFlashcard(id: number) {
+  return axios.post(
+    API_BASE_URL + "flashcards/delete-flashcard",
+    {
+      id,
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
+export function createFlashcard(
+  conversation_id: string,
+  front: string,
+  back: string,
+  both_sides: boolean,
+) {
+  return axios.post(
+    API_BASE_URL + "flashcards/create-flashcard",
+    {
+      conversation_id,
+      front,
+      back,
+      both_sides
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      },
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
     } else {
       console.log(error);
     }
