@@ -45,6 +45,10 @@
           <va-card-title>System:</va-card-title>
           <va-card-content>
             {{ item.message }}
+            <va-icon
+              name="play_arrow"
+              @click="playAudio(item.message)"
+              />
           </va-card-content>
         </va-card>
       </div>
@@ -53,6 +57,8 @@
 </template>
 
 <script lang="ts">
+import { getAudio } from "@/utils/api"
+
 export default {
   name: 'ConversationLine',
   props: [
@@ -69,6 +75,20 @@ export default {
       return false;
     },
   },
+  methods: {
+    playAudio(message: string) {
+      getAudio(message).then(async (response) => {
+        const data = await response.arrayBuffer();
+        console.log(data)
+        const context = new AudioContext();
+        const buffer = await context.decodeAudioData(data);
+        var source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+      });
+    }
+  }
 }
 </script>
 
