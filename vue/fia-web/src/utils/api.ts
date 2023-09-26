@@ -240,3 +240,32 @@ export function createFlashcard(
     throw error;
   });
 }
+
+export function getAudio(
+  text: string,
+) {
+  return fetch(
+    API_BASE_URL + "teacher/get-audio",
+    {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken,
+        "Accept": "audio/mpeg",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: text
+      }),
+      mode: "cors",
+    },
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
