@@ -37,6 +37,32 @@ app.use(router)
 
 // Check here for Vuestic style configuration. e.g. colour classes.
 // https://ui.vuestic.dev/getting-started/configuration-guide
-app.use(createVuestic())
+app.use(createVuestic({
+  config: {
+    colors: {
+      presets: {
+        light: {
+          primary:"#952e41",
+          secondary:"#d44730",
+          success:"#3D9209",
+          info:"#158DE3",
+          danger:"#E42222",
+          warning:"#FFD43A",
+          backgroundPrimary:"#FFFFFF",
+          backgroundSecondary:"#FFFFFF",
+          backgroundElement:"#ECF0F1",
+          backgroundBorder:"#DEE5F2",
+          textPrimary:"#262824",
+          textInverted:"#FFFFFF",
+          shadow:"rgba(0, 0, 0, 0.12)",
+          focus:"#49A8FF",
+          transparent:"rgba(0, 0, 0, 0)",
+          backgroundLanding:"#f4f9fc",
+          backgroundLandingBorder:"rgba(155, 179, 206, 0.8)"
+        }
+      }
+    }
+  }
+}))
 
 app.mount('#app')

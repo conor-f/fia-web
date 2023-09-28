@@ -1,7 +1,6 @@
 <template>
     <va-navbar
       color="#e8c4aa"
-      class="mb-5"
     >
     <template #left>
       <RouterLink to="/">

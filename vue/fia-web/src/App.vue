@@ -9,16 +9,43 @@ import { faro } from '@grafana/faro-web-sdk';
 <template>
   <Toaster />
 
-  <FiaNavBar />
+  <div class="box">
+    <div class="row header">
+      <FiaNavBar />
+    </div>
 
-  <div class="router-container">
-    <RouterView />
+    <div class="row content">
+      <RouterView />
+    </div>
+
+    <div class="row footer">
+      <!-- TODO -->
+    </div>
   </div>
 </template>
 
 <style scoped>
-.router-container {
-  width: 100%;
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
   text-align: center;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+}
+
+.box .row.content {
+  flex: 1 1 100%;
+}
+
+.box .row.footer {
+  flex: 0 1 0px;
 }
 </style>

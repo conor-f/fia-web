@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="login-container">
     <div class="mb-2">
       <label for="username_input">
         Username:
@@ -107,4 +107,8 @@ export default {
 </script>
 
 <style>
+.login-container {
+  padding-top: 2em;
+  margin: 0 auto;
+}
 </style>
