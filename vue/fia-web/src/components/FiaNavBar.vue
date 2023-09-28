@@ -4,9 +4,12 @@
     class="mb-3"
   >
     <template #left>
-      <va-navbar-item class="logo">
-        FIA
-      </va-navbar-item>
+      <RouterLink to="/">
+        <img
+          class="logo"
+          src="/top_left_logo.svg"
+          />
+      </RouterLink>
     </template>
 
     <template #right>
@@ -75,7 +78,7 @@ const authStore = useAuthStore()
 
 <style scoped>
 .logo {
-  font-weight: 600;
-  font-size: 1.5rem;
+  height: 2rem;
+  padding-left: 1rem;
 }
 </style>
