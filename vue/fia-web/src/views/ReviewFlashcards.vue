@@ -1,14 +1,14 @@
 <template>
-    <h3 class="mt-3" >
-      Review Flashcards
-    </h3>
-
-    <div
-      v-for="(flashcard, index) in flashcards"
-      :key="index"
-      >
-      <Flashcard :item="flashcard" />
+  <div class="flashcard-container">
+    <Flashcard
+      v-if="flashcards.length > 0"
+      :item="flashcards[0]"
+      @completed="markFlashcardAsComplete"
+      />
+    <div v-else class="impact">
+      Done for now! Check back later for more flashcards to review.
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -40,9 +40,22 @@ export default {
       });
   },
   methods: {
+    markFlashcardAsComplete() {
+      this.flashcards.shift();
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
+.flashcard-container {
+  padding-top: 2rem;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.impact {
+  font-weight: bold;
+  line-height: 120%;
+}
 </style>

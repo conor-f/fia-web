@@ -3,7 +3,8 @@ import { useAuthStore } from "@/stores/authStore"
 import router from "@/router/index"
 
 const authStore = useAuthStore()
-export const API_BASE_URL = "https://fia-api.randombits.host/api/"
+// export const API_BASE_URL = "https://fia-api.randombits.host/api/"
+export const API_BASE_URL = "http://localhost:8000/api/"
 
 
 function getAuthenticatedRequest(axiosDetails: object) {

@@ -1,5 +1,8 @@
 <template>
-  <div class="conversation">
+  <div 
+    class="conversation"
+    @mousedown="setCoords"
+    >
     <div v-if="! isActiveConversation">
       <div class="opening-message">
         Start a conversation with the prompts, or type/speak a message below
@@ -63,7 +66,10 @@
   <TranslationPopup
     v-if="shouldShowTranslation"
     :selected-text="selectedText.text.value"
+    :xPosition="xCursorPosition"
+    :yPosition="yCursorPosition"
     :conversation-ID="conversation_id"
+    @completed="completeTranslation"
     >
   </TranslationPopup>
 </template>
@@ -93,6 +99,8 @@ const userMessage = ref("");
 const conversation_id = ref("new");
 const response_loading = ref(false);
 const selectedText = useTextSelection()
+const xCursorPosition = ref(0)
+const yCursorPosition = ref(0)
 
 const conversationPrompts = ref([
   {
@@ -118,8 +126,17 @@ const isActiveConversation = computed(() => {
 })
 
 const shouldShowTranslation = computed(() => {
-  return selectedText.text.value != "";
+  return isActiveConversation.value && selectedText.text.value != "";
 })
+
+function completeTranslation() {
+  window.getSelection().removeAllRanges();
+}
+
+function setCoords(event) {
+  xCursorPosition.value = event.clientX;
+  yCursorPosition.value = event.clientY;
+}
 
 function handleConversationInput(event: any) {
   // shift + enter is common for new line.
@@ -186,7 +203,6 @@ function handleAudioInput(audioInput) {
 }
 
 function startConversationWithPrompt(prompt) {
-  console.log(prompt.message);
   userMessage.value = prompt.message;
   handleConversationInput({});
 };

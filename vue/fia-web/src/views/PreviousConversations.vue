@@ -1,5 +1,4 @@
 <template>
-  <h2 class="mb-5">Previous Conversations</h2>
   <ConversationListComponent/>
 </template>
 

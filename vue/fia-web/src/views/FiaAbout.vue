@@ -34,7 +34,7 @@
 .about-container {
   background-image: linear-gradient(to right bottom, #d44730, #ca4036, #be3a3a, #b2363e, #a63240, #a63040, #a62d40, #a62b40, #b3283f, #bf263c, #cb223a, #d71f36);
   width: 100%;
-  color: white;
+  color: var(--va-text-inverted);
   display: flex;
   flex-flow: column;
 }
