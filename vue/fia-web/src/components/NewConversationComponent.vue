@@ -2,8 +2,7 @@
   <div class="conversation">
     <div v-if="! isActiveConversation">
       <div class="opening-message">
-        Welcome! Feel free to start a new conversation using the inputs below. If
-        you're stuck for ideas, why not try one of the prompts?
+        Start a conversation with the prompts, or type/speak a message below
       </div>
 
       <div class="prompt-container">
@@ -32,31 +31,33 @@
         />
     </div>
 
-    <va-inner-loading :loading="response_loading">
-      <textarea
-        cols=40
-        rows=3
+    <div class="inputs-container">
+      <va-textarea
+        :minRows="3"
         v-model="userMessage"
-        class="mt-5"
+        :loading="response_loading"
+        :resize="false"
+        class="inputBox"
         autofocus="true"
         @keyup.enter="handleConversationInput"
-      />
-      <span>
-        <va-icon name="mic" size="2rem" @click="toggleStartAndStop"/>
+      >
+      </va-textarea>
 
-        <span v-if="isRecording">
-          <svg height="80" width="80" class="blinking">
-            <circle cx="50" cy="50" r="10" fill="red" />
-            Sorry, your browser does not support inline SVG.
-          </svg>
-        </span>
-      </span>
-      <input
-        type="button"
-        @click="handleConversationInput"
-        value="Send"
-      />
-    </va-inner-loading>
+      <div class="buttons-container">
+        <div class="mic-container">
+          <va-icon name="mic" size="2rem" @click="toggleStartAndStop"/>
+          <span v-if="isRecording">
+            <svg height="80" width="80" class="blinking">
+              <circle cx="50" cy="50" r="10" fill="red" />
+              Sorry, your browser does not support inline SVG.
+            </svg>
+          </span>
+        </div>
+        <va-button @click="handleConversationInput">
+          Send
+        </va-button>
+      </div>
+    </div>
   </div>
 
   <TranslationPopup
@@ -192,8 +193,9 @@ function startConversationWithPrompt(prompt) {
 </script>
 
 <style scoped>
-textarea {
-  resize: none;
+.conversation {
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* BEGIN Record animation */
@@ -251,8 +253,16 @@ textarea {
 }
 /* END Record animation */
 
+.opening-message {
+  padding-top: 2rem;
+  padding-bottom: 1.5em;
+  font-size: 150%;
+  line-height: 120%;
+}
+  
 .prompt-container {
   padding: .5rem;
+  padding-bottom: 1.5rem;
   width: 75%;
   margin: 0 auto;
   display: grid;
@@ -265,5 +275,21 @@ textarea {
   display: inline-block;
   padding: .25rem;
   border-radius: .75rem;
+}
+
+.inputs-container {
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+}
+
+.inputBox {
+  width: 80%;
+  margin: 0 0;
+}
+
+.buttons-container {
+  display: inline-block;
+  padding-left: 1rem;
 }
 </style>
