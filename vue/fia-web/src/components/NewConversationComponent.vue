@@ -9,13 +9,14 @@
       </div>
 
       <div class="prompt-container">
+        // @ts-ignore
         <va-card
           class="conversation-prompt"
           color="gray"
           gradient
           v-for="prompt in conversationPrompts"
-          :key="prompt"
-          :prompt="prompt"
+          :key="(prompt as any)"
+          :prompt="(prompt as any)"
           @click="startConversationWithPrompt(prompt)"
           >
           <va-card-title> {{ prompt.title }} </va-card-title>
@@ -130,9 +131,11 @@ const shouldShowTranslation = computed(() => {
 })
 
 function completeTranslation() {
+  // @ts-ignore
   window.getSelection().removeAllRanges();
 }
 
+// @ts-ignore
 function setCoords(event) {
   xCursorPosition.value = event.clientX;
   yCursorPosition.value = event.clientY;
@@ -202,7 +205,8 @@ function handleAudioInput(audioInput) {
     });
 }
 
-function startConversationWithPrompt(prompt) {
+function startConversationWithPrompt(prompt: object) {
+  // @ts-ignore
   userMessage.value = prompt.message;
   handleConversationInput({});
 };

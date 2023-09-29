@@ -1,9 +1,5 @@
 <template>
   <div class="conversation">
-    <h3>
-      CONVO {{ conversation_id }}
-    </h3>
-
     <ConversationLine
       v-for="(conversationLine, index) in conversation"
       :item="conversationLine"
