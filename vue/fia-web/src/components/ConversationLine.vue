@@ -9,7 +9,7 @@
           color="#2FE0B3"
           gradient
           >
-          <va-card-title>You:</va-card-title>
+          <va-card-title>You</va-card-title>
           <va-card-content>
             {{ item.message }}
           </va-card-content>
@@ -21,9 +21,16 @@
           :key="index"
           class="learning-moment-container"
           >
-          <va-card-content>
+          <va-card-content v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
             <span class="incorrect-text"> {{ moment.moment.incorrect_section }} </span> ->
             <span class="correct-text"> {{ moment.moment.corrected_section }} </span>
+            <br/>
+            <br/>
+            Explanation: {{ moment.moment.explanation }}
+          </va-card-content>
+          <va-card-content v-else>
+            <span class="incorrect-text"> {{ moment.moment.phrase }} </span> ->
+            <span class="correct-text"> {{ moment.moment.translated_phrase }} </span>
             <br/>
             <br/>
             Explanation: {{ moment.moment.explanation }}
@@ -41,7 +48,7 @@
           color="#db8374"
           gradient
           >
-          <va-card-title>System:</va-card-title>
+          <va-card-title>Fia</va-card-title>
           <va-card-content>
             {{ item.message }}
             <va-icon

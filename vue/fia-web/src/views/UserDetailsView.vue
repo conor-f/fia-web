@@ -1,9 +1,6 @@
 <template>
-    <h3 class="mt-3" >
-      User Details Placeholder
-    </h3>
-
-    <div class="mt-3 mb-3">
+  <div class="user-details-container">
+    <div class="user-details-message">
       You've logged in {{ timesLoggedIn }} times.
     </div>
 
@@ -20,6 +17,7 @@
       >
       Delete Account
     </va-button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -68,5 +66,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.user-details-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.user-details-message {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 </style>

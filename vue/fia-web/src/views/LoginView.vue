@@ -50,7 +50,8 @@
     >
     <h3>Invite Code</h3>
       <input
-        class="mt-3"
+        class="mt-4"
+        placeholder="There currently is none!"
         v-model="invite_code"
         @keyup.enter="show_request_invite_code_modal=false; handle_register_button_press()"
       />

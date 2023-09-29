@@ -9,7 +9,6 @@
       </div>
 
       <div class="prompt-container">
-        // @ts-ignore
         <va-card
           class="conversation-prompt"
           color="gray"
