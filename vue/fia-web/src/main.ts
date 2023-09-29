@@ -48,6 +48,7 @@ app.use(createVuestic({
           info:"#158DE3",
           danger:"#E42222",
           warning:"#FFD43A",
+          gray: "#babfc2",
           backgroundPrimary:"#FFFFFF",
           backgroundSecondary:"#FFFFFF",
           backgroundElement:"#ECF0F1",

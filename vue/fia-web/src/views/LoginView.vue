@@ -85,7 +85,7 @@ export default {
           toast.success("Login successful");
           authStore.accessToken = response["data"]["access_token"];
           authStore.refreshToken = response["data"]["refresh_token"];
-          this.$router.push({ path: "/user-details" });
+          this.$router.push({ path: "/app-home" });
         })
         .catch(error => {
           console.log(error);

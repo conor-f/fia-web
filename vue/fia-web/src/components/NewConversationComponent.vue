@@ -1,7 +1,28 @@
 <template>
   <div class="conversation">
     <div v-if="! isActiveConversation">
-      Welcome! Start a new conversation :)
+      <div class="opening-message">
+        Welcome! Feel free to start a new conversation using the inputs below. If
+        you're stuck for ideas, why not try one of the prompts?
+      </div>
+
+      <div class="prompt-container">
+        <va-card
+          class="conversation-prompt"
+          color="gray"
+          gradient
+          v-for="prompt in conversationPrompts"
+          :key="prompt"
+          :prompt="prompt"
+          @click="startConversationWithPrompt(prompt)"
+          >
+          <va-card-title> {{ prompt.title }} </va-card-title>
+          <va-card-content>
+            {{ prompt.message }}
+          </va-card-content>
+        </va-card>
+      </div>
+
     </div>
     <div v-else>
       <ConversationLine
@@ -71,6 +92,25 @@ const userMessage = ref("");
 const conversation_id = ref("new");
 const response_loading = ref(false);
 const selectedText = useTextSelection()
+
+const conversationPrompts = ref([
+  {
+    "title": "Game",
+    "message": "Können wir zwanzig Fragen spielen?",
+  },
+  {
+    "title": "Sport",
+    "message": "Ich glaube, dass Irland die Rugby-Weltmeisterschaft gewinnen wird",
+  },
+  {
+    "title": "Pop Culture",
+    "message": "Glaubst du, Taylor Swift hat einen Bauchnabel?",
+  },
+  {
+    "title": "Help!",
+    "message": "Kannst du mir beibringen, wie man Kaffee in einer Moka-Kanne kocht?",
+  },
+]);
 
 const isActiveConversation = computed(() => {
     return conversation_id.value != "new";
@@ -143,6 +183,12 @@ function handleAudioInput(audioInput) {
       response_loading.value = false
     });
 }
+
+function startConversationWithPrompt(prompt) {
+  console.log(prompt.message);
+  userMessage.value = prompt.message;
+  handleConversationInput({});
+};
 </script>
 
 <style scoped>
@@ -204,4 +250,20 @@ textarea {
   }
 }
 /* END Record animation */
+
+.prompt-container {
+  padding: .5rem;
+  width: 75%;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+}
+
+.conversation-prompt {
+  display: inline-block;
+  padding: .25rem;
+  border-radius: .75rem;
+}
 </style>
