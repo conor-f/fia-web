@@ -21,6 +21,7 @@
           :key="index"
           class="learning-moment-container"
           >
+          <!-- @vue-ignore -->
           <va-card-content v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
             <span class="incorrect-text"> {{ moment.moment.incorrect_section }} </span> ->
             <span class="correct-text"> {{ moment.moment.corrected_section }} </span>
