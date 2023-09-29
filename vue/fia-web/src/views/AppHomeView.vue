@@ -1,5 +1,4 @@
 <template>
-  <h2>New Conversation</h2>
   <NewConversationComponent/>
 </template>
 

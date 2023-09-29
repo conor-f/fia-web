@@ -1,29 +1,45 @@
 <template>
-  <va-card
-    v-if="should_show_front"
-    bordered
-    outlined
-    >
-    What's wrong with the following:
-    <br/>
-    {{ item.front }}
-    <va-button @click="should_show_front=!should_show_front">Flip</va-button>
-  </va-card>
+  <div class="flashcard">
+    <va-card
+      v-if="should_show_front"
+      @click="should_show_front=!should_show_front"
+      >
+      <va-card-title>
+        Correct the following
+      </va-card-title>
 
-  <va-card
-    v-if="! should_show_front"
-    bordered
-    outlined
-    >
-    {{ item.back }}
-    <va-button @click="should_show_front=!should_show_front">Flip</va-button>
-    <br/>
-    <va-button @click="updateFlashcard(0)">Didn't Know</va-button>
-    <va-button @click="updateFlashcard(1)">Hard to Remember</va-button>
-    <va-button @click="updateFlashcard(2)">Remembered</va-button>
-    <va-button @click="updateFlashcard(3)">Too Easy</va-button>
-    <va-button @click="deleteFlashcard()">Irrelevant</va-button>
-  </va-card>
+      <va-card-content>
+        {{ item.front }}
+      </va-card-content>
+
+      <va-card-actions align="right">
+        <va-button>
+          Flip
+        </va-button>
+      </va-card-actions>
+    </va-card>
+
+    <va-card
+      v-if="! should_show_front"
+      @click="should_show_front=!should_show_front"
+      >
+      <va-card-title>
+        Solution
+      </va-card-title>
+
+      <va-card-content>
+        {{ item.back }}
+      </va-card-content>
+
+      <va-card-actions align="center">
+        <va-button @click="updateFlashcard(0)">Didn't Know</va-button>
+        <va-button @click="updateFlashcard(1)">Hard</va-button>
+        <va-button @click="updateFlashcard(2)">Easy</va-button>
+        <va-button @click="updateFlashcard(3)">Too Easy</va-button>
+        <va-button @click="deleteFlashcard()">Delete</va-button>
+      </va-card-actions>
+    </va-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,6 +50,9 @@ export default {
   props: [
     "item",
   ],
+  emits: [
+    "completed",
+  ],
   data: function() {
     return {
       should_show_front: true,
@@ -41,20 +60,25 @@ export default {
   },
   methods: {
     updateFlashcard(ease: number) {
-      updateFlashcard(this.item.id, ease)
-        .catch(error => {
+      updateFlashcard(this.item.id, ease).then(_ => {
+        this.$emit("completed");
+      }).catch(error => {
           console.log(error);
         });
     },
     deleteFlashcard() {
-      deleteFlashcard(this.item.id)
-        .catch(error => {
+      deleteFlashcard(this.item.id).then(_ => {
+        this.$emit("completed");
+      }).catch(error => {
           console.log(error);
         });
-    },
+    }
   },
 }
 </script>
 
 <style scoped>
+.flashcard {
+  padding: 1rem;
+}
 </style>

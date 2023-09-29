@@ -6,10 +6,10 @@
       >
       <div class="message user-message">
         <va-card
-          color="primary"
+          color="#2FE0B3"
           gradient
           >
-          <va-card-title>You:</va-card-title>
+          <va-card-title>You</va-card-title>
           <va-card-content>
             {{ item.message }}
           </va-card-content>
@@ -19,12 +19,19 @@
         <va-card
           v-for="(moment, index) in item.learning_moments"
           :key="index"
-          color="warning"
-          gradient
+          class="learning-moment-container"
           >
-          <va-card-content>
-            <span style="color:red"> {{ moment.moment.incorrect_section }} </span> ->
-            <span style="color:green"> {{ moment.moment.corrected_section }} </span>
+          <!-- @vue-ignore -->
+          <va-card-content v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
+            <span class="incorrect-text"> {{ moment.moment.incorrect_section }} </span> ->
+            <span class="correct-text"> {{ moment.moment.corrected_section }} </span>
+            <br/>
+            <br/>
+            Explanation: {{ moment.moment.explanation }}
+          </va-card-content>
+          <va-card-content v-else>
+            <span class="incorrect-text"> {{ moment.moment.phrase }} </span> ->
+            <span class="correct-text"> {{ moment.moment.translated_phrase }} </span>
             <br/>
             <br/>
             Explanation: {{ moment.moment.explanation }}
@@ -39,14 +46,15 @@
       >
       <div class="message system-message">
         <va-card
-          color="secondary"
+          color="#db8374"
           gradient
           >
-          <va-card-title>System:</va-card-title>
+          <va-card-title>Fia</va-card-title>
           <va-card-content>
             {{ item.message }}
             <va-icon
               name="play_arrow"
+              size="1rem"
               @click="playAudio(item.message)"
               />
           </va-card-content>
@@ -104,6 +112,12 @@ export default {
   margin: 1em;
 }
 
+.learning-moment-container {
+  border: 1px solid black;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+}
+
 .learning-message {
   margin-top: 2em;
 }
@@ -112,5 +126,13 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-direction: row-reverse;
+}
+
+.incorrect-text {
+  color: var(--va-danger);
+}
+
+.correct-text {
+  color: var(--va-success);
 }
 </style>

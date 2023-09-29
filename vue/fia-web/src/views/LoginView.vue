@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="login-container">
     <div class="mb-2">
       <label for="username_input">
         Username:
@@ -50,7 +50,8 @@
     >
     <h3>Invite Code</h3>
       <input
-        class="mt-3"
+        class="mt-4"
+        placeholder="There currently is none!"
         v-model="invite_code"
         @keyup.enter="show_request_invite_code_modal=false; handle_register_button_press()"
       />
@@ -85,7 +86,7 @@ export default {
           toast.success("Login successful");
           authStore.accessToken = response["data"]["access_token"];
           authStore.refreshToken = response["data"]["refresh_token"];
-          this.$router.push({ path: "/user-details" });
+          this.$router.push({ path: "/app-home" });
         })
         .catch(error => {
           console.log(error);
@@ -107,4 +108,8 @@ export default {
 </script>
 
 <style>
+.login-container {
+  padding-top: 2em;
+  margin: 0 auto;
+}
 </style>

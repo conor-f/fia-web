@@ -1,11 +1,10 @@
 <template>
-
   <va-accordion v-model="expanded_list">
     <va-collapse
       v-for="(conversation, index) in conversations"
       :key="index"
       :item="conversation"
-      :header="(conversation as any).conversation_id"
+      :header="(conversation as any).conversation_intro"
       >
       <div>
         <ConversationComponent
@@ -14,7 +13,6 @@
       </div>
     </va-collapse>
   </va-accordion>
-
 </template>
 
 <script lang="ts">

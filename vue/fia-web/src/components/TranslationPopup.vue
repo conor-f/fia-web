@@ -1,10 +1,18 @@
 <template>
-  <div>
-    TRANSLATION: {{ translatedSelection }}
-    <va-button @click="createFlashcardClickHandler">
-      Create Flashcard
-    </va-button>
-
+  <div class="translation-popup-container">
+    <va-card>
+      <va-card-title>
+        Translation ({{ fromLanguage }} -> {{ toLanguage }})
+      </va-card-title>
+      <va-card-content>
+        {{ translatedSelection }}
+      </va-card-content>
+      <va-card-actions>
+        <va-button @click="createFlashcardClickHandler">
+          Create Flashcard
+        </va-button>
+      </va-card-actions>
+    </va-card>
   </div>
 </template>
 
@@ -19,15 +27,27 @@ import { createFlashcard } from "@/utils/api"
 const props = defineProps({
   conversationID: String,
   selectedText: String,
+  xPosition: Number,
+  yPosition: Number,
 })
 
+const emit = defineEmits(["completed"]);
+
+const xPosition = computed(() => {
+    return props.xPosition + "px";
+})
+const yPosition = computed(() => {
+    return props.yPosition + "px";
+})
 
 // @ts-ignore
 translate.engine = "deepl";
 // @ts-ignore
 translate.key = import.meta.env.VITE_DEEPL_API_KEY;
 
-const translatedSelection = ref("");
+const translatedSelection = ref("translatedSelection");
+const fromLanguage = ref("fromLanguage");
+const toLanguage = ref("toLanguage");
 
 watchEffect(() => {
   if (props.selectedText != "") {
@@ -48,6 +68,9 @@ watchEffect(() => {
       }
     }
 
+    fromLanguage.value = inputLang;
+    toLanguage.value = outputLang;
+
     // @ts-ignore
     translate(props.selectedText, {
       from: inputLang,
@@ -67,9 +90,16 @@ function createFlashcardClickHandler() {
     props.selectedText,
     translatedSelection.value,
     true
-  )
+  ).then(_ => {
+    emit("completed");
+  });
 }
 </script>
 
 <style scoped>
+.translation-popup-container {
+  position: fixed;
+  top: v-bind("yPosition");
+  left: v-bind("xPosition");
+}
 </style>
