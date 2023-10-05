@@ -1,9 +1,5 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { createVuestic, createIconsConfig } from 'vuestic-ui';
-import "vuestic-ui/css";
 import "material-design-icons-iconfont/dist/material-design-icons.min.css";
 
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
@@ -30,6 +26,8 @@ var faro = initializeFaro({
 import App from './App.vue'
 import router from './router'
 
+import './assets/style.css'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -37,33 +35,5 @@ app.use(router)
 
 // Check here for Vuestic style configuration. e.g. colour classes.
 // https://ui.vuestic.dev/getting-started/configuration-guide
-app.use(createVuestic({
-  config: {
-    colors: {
-      presets: {
-        light: {
-          primary:"#952e41",
-          secondary:"#d44730",
-          success:"#3D9209",
-          info:"#158DE3",
-          danger:"#E42222",
-          warning:"#FFD43A",
-          gray: "#babfc2",
-          backgroundPrimary:"#FFFAFA",
-          backgroundSecondary:"#f4e8e8",
-          backgroundElement:"#ECF0F1",
-          backgroundBorder:"#DEE5F2",
-          textPrimary:"#262824",
-          textInverted:"#FFFAFA",
-          shadow:"rgba(0, 0, 0, 0.12)",
-          focus:"#49A8FF",
-          transparent:"rgba(0, 0, 0, 0)",
-          backgroundLanding:"#f4f9fc",
-          backgroundLandingBorder:"rgba(155, 179, 206, 0.8)"
-        }
-      }
-    }
-  }
-}))
 
 app.mount('#app')
