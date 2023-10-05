@@ -1,7 +1,7 @@
 <template>
   <div
     v-for="menuItem in menuItems"
-    :key="menuItem"
+    :key="menuItem.linkText"
     >
     <div
       v-if="menuItem.visible"
