@@ -93,8 +93,9 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    // require("daisyui"),
+    require("daisyui"),
   ],
+  daisyui: {}
   /*
   // https://daisyui.com/docs/config/
   daisyui: {

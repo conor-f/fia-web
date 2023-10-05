@@ -1,20 +1,28 @@
 <template>
-  <div class="login-container">
-    <div class="mb-2">
-      <label for="username_input">
+  <!-- TODO: Causing needless scrollbar -->
+  <div class="bg-background-50 flex flex-col pt-8 h-screen w-screen">
+
+    <div class="flex flex-row justify-center items-center">
+      <label
+        for="username_input"
+        class="text-text-900 text-xl pr-5"
+        >
         Username:
       </label>
-        <input
-          type="text"
-          id="username_input"
-          v-model="username"
+      <input
+        type="text"
+        placeholder="username"
+        class="input input-bordered input-black w-full max-w-xs"
+        v-model="username"
+        id="username_input"
         />
     </div>
 
-    <br/>
-
-    <div class="mb-2">
-      <label for="password_input">
+    <div class="flex flex-row justify-center items-center">
+      <label
+        for="password_input"
+        class="text-text-900 text-xl pr-5"
+        >
         Password:
       </label>
       <input
@@ -22,46 +30,62 @@
         id="password_input"
         @keyup.enter="handle_login_button_press"
         v-model="password"
+        placeholder="password"
+        class="input input-bordered input-black w-full max-w-xs"
       />
     </div>
 
-    <br/>
-
-    <va-button
+    <button
+      class=""
       @click="handle_login_button_press"
-      class="mr-4"
       >
       Login
-    </va-button>
+    </button>
 
-    <va-button @click="show_request_invite_code_modal = true"
-      class="mt-3 ml-4"
+    <!-- TODO: Can't use @click for some reason... -->
+    <button
+      class=""
+      onclick="invite_code_modal.showModal()"
       >
       Register
-    </va-button>
+    </button>
   </div>
 
 
-  <va-modal
-    v-model="show_request_invite_code_modal"
-    ok-text="Register"
-    @ok="handle_register_button_press"
-    blur
-    >
-    <h3>Invite Code</h3>
-      <input
-        class="mt-4"
-        placeholder="There currently is none!"
-        v-model="invite_code"
-        @keyup.enter="show_request_invite_code_modal=false; handle_register_button_press()"
-      />
-  </va-modal>
+  <dialog id="invite_code_modal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+      <div class="font-bold text-lg">Invite Code</div>
+
+      <p class="py-4">
+        Please enter an invite code to continue. If you don't
+        have an invite code, email hello@getfia.com to request one!
+      </p>
+
+      <div class="modal-action">
+        <form method="dialog">
+          <input
+            class="mt-4"
+            placeholder="There currently is none!"
+            v-model="invite_code"
+            @keyup.enter="handle_register_button_press()"
+          />
+          <button
+            class="btn"
+            @click="handle_register_button_press()"
+            >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
 </template>
 
 <script lang="ts">
-/** TODO:
- * Put inputs into flex/grid
- */
 import { login, register } from "@/utils/api"
 import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
@@ -76,7 +100,6 @@ export default {
       "username": "",
       "password": "",
       "invite_code": "",
-      "show_request_invite_code_modal": false
     }
   },
   methods: {
@@ -106,10 +129,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.login-container {
-  padding-top: 2em;
-  margin: 0 auto;
-}
-</style>
