@@ -1,22 +1,38 @@
 <template>
-  <div class="w-full inline-flex justify-between bg-base-100 py-2">
+  <div class="w-full flex flex-row justify-between px-4 py-3">
 
-    <NavbarLogo />
+    <div class="flex flex-row justify-between">
+      <RouterLink to="/">
+        <Logo
+          class="h-12 w-12 inline align-middle"
+          src="/top_left_logo.svg"
+          />
 
-    <!-- TODO: This can't be right... -->
-    <div class="hidden md:inline-flex">
-      <LargeTopBar />
+        <div class="inline text-2xl text-text-950
+          font-semibold pl-3 align-middle">
+          Fia
+        </div>
+      </RouterLink>
     </div>
 
-    <div class="inline-flex md:hidden">
-      <SmallTopBar />
+    <!-- TODO: This can't be right... -->
+    <div>
+      <div class="md:hidden align-middle">
+        <SmallTopBar />
+      </div>
+
+      <div class="hidden md:inline-flex align-middle">
+        <LargeTopBar />
+      </div>
     </div>
 
   </div>
 </template>
 
 <script setup lang="ts">
-import NavbarLogo from '@/components/NavbarLogo.vue';
+import { RouterLink } from 'vue-router'
+
+import Logo from '@/assets/icons/Logo.vue'
 import LargeTopBar from '@/components/LargeTopBar.vue';
 import SmallTopBar from '@/components/SmallTopBar.vue';
 </script>

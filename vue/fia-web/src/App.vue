@@ -9,7 +9,8 @@ import { faro } from '@grafana/faro-web-sdk';
 <template>
   <Toaster />
 
-  <FiaNavBar />
-  <RouterView />
-
+  <div class="bg-background-50">
+    <FiaNavBar />
+    <RouterView />
+  </div>
 </template>

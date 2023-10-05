@@ -7,7 +7,22 @@
       v-if="menuItem.visible"
       @click="$emit('click')"
       >
-      <RouterLink :to="menuItem.route">{{ menuItem.linkText }}</RouterLink>
+      <RouterLink :to="menuItem.route">
+        <div
+          v-if="responsive"
+          class="text-text-950 font-bold
+          border-solid border-b-2 border-secondary-200 border-opacity-90
+          text-center pt-2.5 pb-1"
+          >
+          {{ menuItem.linkText }}
+        </div>
+
+        <div v-else
+             class="text-text-950 pl-3"
+             >
+          {{ menuItem.linkText }}
+        </div>
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -20,6 +35,9 @@ import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
 
+defineProps({
+  responsive: Boolean
+});
 defineEmits(["click"]);
 
 const menuItems = ref([

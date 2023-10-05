@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full gap-5">
+  <div class="flex w-full pt-3 pr-2">
     <NavBarMenuItems/>
   </div>
 </template>
