@@ -11,7 +11,7 @@
   <Logo
     class="
     w-full
-    flex-initial basis-1/4 p-12 rounded-lg max-h-96 align-middle"
+    basis-1/4 p-12 rounded-lg max-h-96 align-middle"
     />
 
   <div class="w-full px-5 text-l text-background-50">

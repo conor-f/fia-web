@@ -8,7 +8,7 @@
       <ResponsiveHomepage />
     </div>
 
-    <div class="hidden md:inline-flex">
+    <div class="hidden md:inline-flex flex-col">
       <ResponsiveHomepage />
     </div>
   </div>
