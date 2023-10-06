@@ -1,5 +1,5 @@
 <template>
-  <div class="conversation">
+  <div class="w-full">
     <ConversationLine
       v-for="(conversationLine, index) in conversation"
       :item="conversationLine"
@@ -10,10 +10,7 @@
 
 <script lang="ts">
 import { getConversation } from "@/utils/api"
-import { toast } from "vue-sonner"
-
 import ConversationLine from "@/components/ConversationLine.vue"
-
 
 export default {
   name: 'ConversationComponent',
@@ -46,6 +43,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-</style>

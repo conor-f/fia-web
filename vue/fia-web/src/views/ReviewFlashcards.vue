@@ -1,11 +1,11 @@
 <template>
-  <div class="flashcard-container">
+  <div class="flex pt-4 justify-center">
     <Flashcard
       v-if="flashcards.length > 0"
       :item="flashcards[0]"
       @completed="markFlashcardAsComplete"
       />
-    <div v-else class="impact">
+    <div v-else class="">
       Done for now! Check back later for more flashcards to review.
     </div>
   </div>
@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { getFlashcards } from "@/utils/api"
-import { toast } from "vue-sonner"
 import { useAuthStore } from "@/stores/authStore"
 import Flashcard from "@/components/Flashcard.vue"
 
@@ -46,16 +45,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.flashcard-container {
-  padding-top: 2rem;
-  width: 70%;
-  margin: 0 auto;
-}
-
-.impact {
-  font-weight: bold;
-  line-height: 120%;
-}
-</style>

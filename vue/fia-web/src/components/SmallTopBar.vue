@@ -14,14 +14,14 @@
 
     <div
       v-if="isMenuVisible"
-      class="absolute bg-background-50 top-14 left-0 w-screen h-screen opacity-90"
+      class="absolute bg-background-50 z-[99] top-14 left-0 w-screen h-screen opacity-90"
       @click="isMenuVisible = false"
       >
     </div>
 
     <div
       v-if="isMenuVisible"
-      class="absolute inset-y-0 right-0
+      class="absolute inset-y-0 right-0 z-[100]
       pt-12 pl-5 pr-5
       bg-background-50/60 text-primary-600 sm:w-2/3 md:w-1/3 h-screen"
       @click="isMenuVisible = false"
