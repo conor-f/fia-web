@@ -5,6 +5,9 @@ import "material-design-icons-iconfont/dist/material-design-icons.min.css";
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 var faro = initializeFaro({
   url: 'https://faro-collector-prod-eu-west-2.grafana.net/collect/c48c99765af94fbe0e6d6fc42c7e0b5f',
   app: {
@@ -32,8 +35,6 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-
-// Check here for Vuestic style configuration. e.g. colour classes.
-// https://ui.vuestic.dev/getting-started/configuration-guide
+app.use(Toast, {});
 
 app.mount('#app')

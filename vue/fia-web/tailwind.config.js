@@ -95,28 +95,25 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("daisyui"),
   ],
-  daisyui: {}
-  /*
   // https://daisyui.com/docs/config/
   daisyui: {
     themes: [
-      "cupcake",
-      "light",
-      "pastel",
       {
         // TODO: This is just from the docs: https://daisyui.com/docs/colors/
         fia: {
-          "primary": "#a991f7",
-          "secondary": "#f6d860",
-          "accent": "#37cdbe",
+          "primary": "#fbecea",
+          "secondary": "#f8f5ec",
+          "accent": "#fbece9",
           "neutral": "#3d4451",
-          "base-100": "#ffffff",
+          "base-100": "#fff9e5",
 
           "--animation-input": "0.2s", // For example with CSS variables.
         },
       },
+      "cupcake",
+      "light",
+      "pastel",
     ],
     logs: false
   }
-  */
 }

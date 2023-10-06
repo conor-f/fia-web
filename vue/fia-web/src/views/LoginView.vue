@@ -1,27 +1,26 @@
 <template>
-  <!-- TODO: Causing needless scrollbar -->
-  <div class="bg-background-50 flex flex-col pt-8 h-screen w-screen">
+  <!-- TODO: Fill bottom of screen with background colour. Related to DaisyUI. -->
+  <div class="bg-background-50 pt-8
+    grid grid-cols-3 justify-items-center items-center gap-3
+    w-screen">
 
-    <div class="flex flex-row justify-center items-center">
       <label
         for="username_input"
-        class="text-text-900 text-xl pr-5"
+        class="text-text-900 justify-self-end md:text-xl"
         >
         Username:
       </label>
       <input
         type="text"
         placeholder="username"
-        class="input input-bordered input-black w-full max-w-xs"
+        class="input col-span-2 input-bordered input-black h-10 w-full justify-self-start max-w-[11rem]"
         v-model="username"
         id="username_input"
         />
-    </div>
 
-    <div class="flex flex-row justify-center items-center">
       <label
         for="password_input"
-        class="text-text-900 text-xl pr-5"
+        class="text-text-900 md:text-xl justify-self-end"
         >
         Password:
       </label>
@@ -31,12 +30,11 @@
         @keyup.enter="handle_login_button_press"
         v-model="password"
         placeholder="password"
-        class="input input-bordered input-black w-full max-w-xs"
+        class="input input-bordered col-span-2 input-black h-10 justify-self-start w-full max-w-[11rem]"
       />
-    </div>
 
     <button
-      class=""
+      class="btn btn-primary justify-self-end"
       @click="handle_login_button_press"
       >
       Login
@@ -44,7 +42,7 @@
 
     <!-- TODO: Can't use @click for some reason... -->
     <button
-      class=""
+      class="btn btn-secondary justify-self-start"
       onclick="invite_code_modal.showModal()"
       >
       Register
@@ -62,13 +60,19 @@
       </p>
 
       <div class="modal-action">
-        <form method="dialog">
+        <form
+          class="flex flex-col w-full gap-4 items-center"
+          method="dialog"
+          >
           <input
-            class="mt-4"
-            placeholder="There currently is none!"
+            type="text"
+            placeholder=""
+            class="input input-bordered input-black h-10 max-w-[14rem]" 
             v-model="invite_code"
+            id="username_input"
             @keyup.enter="handle_register_button_press()"
-          />
+            />
+
           <button
             class="btn"
             @click="handle_register_button_press()"
@@ -87,11 +91,11 @@
 
 <script lang="ts">
 import { login, register } from "@/utils/api"
-import { toast } from "vue-sonner"
+import { useToast } from "vue-toastification"
 import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
-
+const toast = useToast();
 
 export default {
   name: 'LoginView',
