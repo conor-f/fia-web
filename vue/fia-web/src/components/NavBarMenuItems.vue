@@ -58,7 +58,7 @@ const menuItems = ref([
   },
   {
     linkText: "Chat",
-    route: "/app-home",
+    route: "/new-conversation",
     visible: authStore.isLoggedIn
   },
   {

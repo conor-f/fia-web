@@ -33,9 +33,9 @@ const router = createRouter({
       component: () => import("@/views/UserDetailsView.vue")
     },
     {
-      path: '/app-home',
-      name: 'app-home',
-      component: () => import("@/views/AppHomeView.vue")
+      path: '/new-conversation',
+      name: 'new-conversation',
+      component: () => import("@/views/NewConversationView.vue")
     },
     {
       path: '/previous-conversations',
