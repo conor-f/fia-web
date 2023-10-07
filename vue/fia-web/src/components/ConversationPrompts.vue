@@ -5,7 +5,7 @@
       message in the chat box
     </div>
 
-    <div class="">
+    <div class="grid grid-flow-row auto-rows-max">
       <ConversationPrompt
         v-for="prompt_object in conversationPrompts"
         :key="(prompt_object as any)"
