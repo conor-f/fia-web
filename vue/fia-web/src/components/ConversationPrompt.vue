@@ -1,5 +1,5 @@
 <template>
-  <div class="card max-w-[24rem] bg-base-100 shadow-xl">
+  <div class="card w-100 bg-base-100 shadow-xl">
     <div class="card-body">
       <div class="card-title">
         {{ title }}
