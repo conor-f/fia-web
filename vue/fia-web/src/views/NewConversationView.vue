@@ -3,29 +3,9 @@
     class="conversation"
     @mousedown="setCoords"
     >
-    <div v-if="! isActiveConversation">
-      <div class="opening-message">
-        Start a conversation with the prompts, or type/speak a message below
-      </div>
 
-      <div class="prompt-container">
-        <va-card
-          class="conversation-prompt"
-          color="gray"
-          gradient
-          v-for="prompt in conversationPrompts"
-          :key="(prompt as any)"
-          :prompt="(prompt as any)"
-          @click="startConversationWithPrompt(prompt)"
-          >
-          <va-card-title> {{ prompt.title }} </va-card-title>
-          <va-card-content>
-            {{ prompt.message }}
-          </va-card-content>
-        </va-card>
-      </div>
+    <ConversationPrompts v-if="! isActiveConversation"/>
 
-    </div>
     <div v-else>
       <ConversationLine
         v-for="conversationLine in conversation"
@@ -79,6 +59,7 @@ import { getConversation, converse, converseWithAudio } from "@/utils/api"
 
 import ConversationLine from "@/components/ConversationLine.vue"
 import TranslationPopup from "@/components/TranslationPopup.vue"
+import ConversationPrompts from "@/components/ConversationPrompts.vue"
 
 import { ref, computed } from "vue";
 // @ts-ignore
