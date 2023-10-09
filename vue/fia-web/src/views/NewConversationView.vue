@@ -4,7 +4,6 @@
     <div v-if="!isActiveConversation">
       <ConversationPrompts
         @promptClicked="handlePromptClick"/>
-      <ConversationInputs/>
     </div>
 
     <div v-else>
@@ -14,6 +13,12 @@
         :key="conversationLine"
         />
     </div>
+
+    <ConversationInputs
+      :isLoading="isLoading"
+      @textMessageInput="handleTextMessageInput"
+      @audioMessageInput="handleAudioMessageInput"
+      />
   </div>
 
   <TranslationPopup
@@ -41,18 +46,10 @@ import { useRecorder } from "vue-voice-recording";
 
 import { useTextSelection } from '@vueuse/core';
 
-const {
-  isRecording,
-  toggleStartAndStop,
-} = useRecorder({
-  // @ts-ignore
-  getAsMp3: (value) => handleAudioInput(value),
-});
-
 const conversation = ref([]);
 const userMessage = ref("");
 const conversation_id = ref("new");
-const response_loading = ref(false);
+const isLoading = ref(false);
 const selectedText = useTextSelection()
 const xCursorPosition = ref(0)
 const yCursorPosition = ref(0)
@@ -106,7 +103,7 @@ function converseWithMessage(message: str) {
       pushMessageToConversation("system", response.data.conversation_response);
     })
     .finally(() => {
-      response_loading.value = false
+      isLoading.value = false
     });
 }
 
@@ -118,23 +115,9 @@ function pushMessageToConversation(role: str, message: str) {
   });
 }
 
-function handleConversationInput(event: any) {
-  // shift + enter is common for new line.
-  if (event.shiftKey) {
-    return;
-  }
-
-  response_loading.value = true;
-
-  const messageCopy = userMessage.value.slice();
-  userMessage.value = "";
-
-  converseWithMessage(messageCopy);
-}
-
 // @ts-ignore
-function handleAudioInput(audioInput) {
-  response_loading.value = true;
+function handleAudioMessageInput(audioInput) {
+  isLoading.value = true;
 
   converseWithAudio(conversation_id.value, audioInput.data)
     .then(response => {
@@ -156,12 +139,17 @@ function handleAudioInput(audioInput) {
       });
     })
     .finally(() => {
-      response_loading.value = false
+      isLoading.value = false
     });
 }
 
 function handlePromptClick(prompt_object) {
   pushMessageToConversation("user", prompt_object.prompt);
   converseWithMessage(prompt_object.prompt);
+}
+
+function handleTextMessageInput(message: str) {
+  pushMessageToConversation("user", message);
+  converseWithMessage(message);
 }
 </script>
