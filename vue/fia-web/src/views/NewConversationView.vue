@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5" @mousedown="setCoords">
+  <div class="my-5">
 
     <div v-if="!isActiveConversation">
       <ConversationPrompts
@@ -23,9 +23,7 @@
 
   <TranslationPopup
     v-if="shouldShowTranslation"
-    :selected-text="selectedText.text.value"
-    :xPosition="xCursorPosition"
-    :yPosition="yCursorPosition"
+    :selected-text="selectedText"
     :conversation-ID="conversation_id"
     @completed="completeTranslation"
     >
@@ -48,8 +46,6 @@ const conversation = ref([]);
 const conversation_id = ref("new");
 const isLoading = ref(false);
 const selectedText = useTextSelection()
-const xCursorPosition = ref(0)
-const yCursorPosition = ref(0)
 
 const isActiveConversation = computed(() => {
   return conversation.value.length != 0;
@@ -62,12 +58,6 @@ const shouldShowTranslation = computed(() => {
 function completeTranslation() {
   // @ts-ignore
   window.getSelection().removeAllRanges();
-}
-
-// @ts-ignore
-function setCoords(event) {
-  xCursorPosition.value = event.clientX;
-  yCursorPosition.value = event.clientY;
 }
 
 function converseWithMessage(message: str) {
