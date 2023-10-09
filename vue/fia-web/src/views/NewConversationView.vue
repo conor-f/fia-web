@@ -1,10 +1,10 @@
 <template>
   <div 
-    class="conversation"
+    class="my-5"
     @mousedown="setCoords"
     >
 
-    <div v-if="! isActiveConversation">
+    <div v-if="!isActiveConversation">
       <ConversationPrompts/>
       <ConversationInputs/>
     </div>

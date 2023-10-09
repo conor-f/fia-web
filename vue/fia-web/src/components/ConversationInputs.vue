@@ -14,26 +14,14 @@
         >
       </textarea>
 
-      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+        <!-- TODO: Hover states -->
+        <div @click="toggleStartAndStop" class="mr-2">
+          <MicrophoneIcon v-if="!isRecording"/>
+          <RecordingIcon v-if="isRecording" class="mb-3"/>
+        </div>
+        <MessageSendIcon @click="handleConversationInput"/>
       </div>
-    </div>
-
-    <div class="buttons-container">
-      <div class="mic-container">
-        <va-icon name="mic" size="2rem" @click="toggleStartAndStop"/>
-          <span v-if="isRecording">
-            <svg height="80" width="80" class="blinking">
-              <circle cx="50" cy="50" r="10" fill="red" />
-              Sorry, your browser does not support inline SVG.
-            </svg>
-          </span>
-      </div>
-      <va-button @click="handleConversationInput">
-        Send
-      </va-button>
     </div>
   </div>
 </template>
@@ -45,6 +33,10 @@ import ConversationLine from "@/components/ConversationLine.vue"
 import TranslationPopup from "@/components/TranslationPopup.vue"
 import ConversationPrompts from "@/components/ConversationPrompts.vue"
 import ConversationInputs from "@/components/ConversationInputs.vue"
+
+import MessageSendIcon from "@/assets/icons/MessageSendIcon.vue"
+import MicrophoneIcon from "@/assets/icons/MicrophoneIcon.vue"
+import RecordingIcon from "@/assets/icons/RecordingIcon.vue"
 
 import { ref, computed } from "vue";
 // @ts-ignore
