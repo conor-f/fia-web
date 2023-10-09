@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-background-200 px-4 py-3"
+    class="bg-background-200 px-4 py-3 rounded-xl"
     ref="floating"
     :style="floatingStyles"
     >
@@ -8,21 +8,15 @@
       Translation ({{ fromLanguage }} -> {{ toLanguage }})
     </div>
 
-    <div class="prose">
+    <div class="prose mb-3">
       {{ translatedSelection }}
     </div>
-    <div>
-      <button @click="createFlashcardClickHandler">
+    <div class="w-full text-center">
+      <button class="btn btn-accent" @click="createFlashcardClickHandler">
         Create Flashcard
       </button>
     </div>
   </div>
-  <!--
-  <div class="translation-popup-container">
-    <div>
-    </div>
-  </div>
-  -->
 </template>
 
 <script lang="ts" setup>
@@ -41,16 +35,7 @@ const props = defineProps({
 })
 
 
-const virtualEl = ref({
-  width: 0,
-  height: 0,
-  x: 0,
-  y: 0,
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-});
+const virtualEl = ref({});
 const floating = ref(null);
 const { floatingStyles } = useFloating(
   virtualEl,
