@@ -29,6 +29,7 @@
 import { ref, computed, watchEffect } from "vue";
 
 import { useFloating } from "@floating-ui/vue";
+import { autoPlacement } from "@floating-ui/dom";
 
 import { detect, detectAll } from 'tinyld/heavy';
 import translate from "translate";
@@ -37,8 +38,6 @@ import { createFlashcard } from "@/utils/api"
 const props = defineProps({
   conversationID: String,
   selectedText: String,
-  xPosition: Number,
-  yPosition: Number,
 })
 
 
@@ -53,7 +52,13 @@ const virtualEl = ref({
   bottom: 0,
 });
 const floating = ref(null);
-const { floatingStyles } = useFloating(virtualEl, floating);
+const { floatingStyles } = useFloating(
+  virtualEl,
+  floating,
+  {
+    middleware: [autoPlacement()],
+  }
+);
 
 const emit = defineEmits(["completed"]);
 
@@ -72,7 +77,8 @@ watchEffect(() => {
     virtualEl.value = {
       getBoundingClientRect() {
         return props.selectedText.rects.value[0];
-      }
+      },
+      contextElement: props.selectedText.selection.value.anchorNode,
     }
 
     let inputLang = "de";
