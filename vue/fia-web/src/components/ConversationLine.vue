@@ -14,6 +14,7 @@
           class="chat-bubble chat-bubble-warning mb-1"
           >
 
+          <!-- @vue-ignore -->
           <div v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
             <div class="text-center">
               <span class="text-error"> {{ moment.moment.incorrect_section }} </span>

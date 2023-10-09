@@ -60,7 +60,7 @@ function completeTranslation() {
   window.getSelection().removeAllRanges();
 }
 
-function converseWithMessage(message: str) {
+function converseWithMessage(message: string) {
   // @ts-ignore
   converse(conversation_id.value, message)
     .then(response => {
@@ -75,7 +75,7 @@ function converseWithMessage(message: str) {
     });
 }
 
-function pushMessageToConversation(role: str, message: str) {
+function pushMessageToConversation(role: string, message: string) {
   // @ts-ignore
   conversation.value.push({
     role: role,
@@ -111,12 +111,14 @@ function handleAudioMessageInput(audioInput) {
     });
 }
 
-function handlePromptClick(prompt_object) {
+function handlePromptClick(prompt_object: object) {
+  // @ts-ignore
   pushMessageToConversation("user", prompt_object.prompt);
+  // @ts-ignore
   converseWithMessage(prompt_object.prompt);
 }
 
-function handleTextMessageInput(message: str) {
+function handleTextMessageInput(message: string) {
   pushMessageToConversation("user", message);
   converseWithMessage(message);
 }

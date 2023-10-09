@@ -8,10 +8,13 @@
       <input type="radio" name="conversation-list-accordion"/>
 
       <div class="collapse-title text-xl font-medium">
-        {{ conversation.conversation_intro }}
+        
+        {{ // @ts-ignore
+        conversation.conversation_intro }}
       </div>
 
       <div class="collapse-content">
+        <!-- @vue-ignore -->
         <ConversationComponent
           :conversation_id="conversation.conversation_id"
         />

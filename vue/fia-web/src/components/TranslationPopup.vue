@@ -31,13 +31,15 @@ import { createFlashcard } from "@/utils/api"
 
 const props = defineProps({
   conversationID: String,
-  selectedText: String,
+  selectedText: Object,
 })
 
 
+// @ts-ignore
 const virtualEl = ref({});
 const floating = ref(null);
 const { floatingStyles } = useFloating(
+  // @ts-ignore
   virtualEl,
   floating,
   {
@@ -58,11 +60,14 @@ const fromLanguage = ref("fromLanguage");
 const toLanguage = ref("toLanguage");
 
 watchEffect(() => {
+  // @ts-ignore
   if (props.selectedText != "") {
     virtualEl.value = {
       getBoundingClientRect() {
+        // @ts-ignore
         return props.selectedText.rects.value[0];
       },
+      // @ts-ignore
       contextElement: props.selectedText.selection.value.anchorNode,
     }
 
