@@ -41,37 +41,15 @@ import ConversationPrompts from "@/components/ConversationPrompts.vue"
 import ConversationInputs from "@/components/ConversationInputs.vue"
 
 import { ref, computed } from "vue";
-// @ts-ignore
-import { useRecorder } from "vue-voice-recording";
 
 import { useTextSelection } from '@vueuse/core';
 
 const conversation = ref([]);
-const userMessage = ref("");
 const conversation_id = ref("new");
 const isLoading = ref(false);
 const selectedText = useTextSelection()
 const xCursorPosition = ref(0)
 const yCursorPosition = ref(0)
-
-const conversationPrompts = ref([
-  {
-    "title": "Game",
-    "message": "Können wir zwanzig Fragen spielen?",
-  },
-  {
-    "title": "Sport",
-    "message": "Ich glaube, dass Irland die Rugby-Weltmeisterschaft gewinnen wird",
-  },
-  {
-    "title": "Pop Culture",
-    "message": "Glaubst du, Taylor Swift hat einen Bauchnabel?",
-  },
-  {
-    "title": "Help!",
-    "message": "Kannst du mir beibringen, wie man Kaffee in einer Moka-Kanne kocht?",
-  },
-]);
 
 const isActiveConversation = computed(() => {
   return conversation.value.length != 0;
