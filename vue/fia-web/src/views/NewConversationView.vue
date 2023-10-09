@@ -1,11 +1,9 @@
 <template>
-  <div 
-    class="my-5"
-    @mousedown="setCoords"
-    >
+  <div class="my-5" @mousedown="setCoords">
 
     <div v-if="!isActiveConversation">
-      <ConversationPrompts/>
+      <ConversationPrompts
+        @promptClicked="handlePromptClick"/>
       <ConversationInputs/>
     </div>
 
@@ -79,7 +77,7 @@ const conversationPrompts = ref([
 ]);
 
 const isActiveConversation = computed(() => {
-    return conversation_id.value != "new";
+  return conversation.value.length != 0;
 })
 
 const shouldShowTranslation = computed(() => {
@@ -97,6 +95,29 @@ function setCoords(event) {
   yCursorPosition.value = event.clientY;
 }
 
+function converseWithMessage(message: str) {
+  // @ts-ignore
+  converse(conversation_id.value, message)
+    .then(response => {
+      conversation_id.value = response.data.conversation_id
+      // @ts-ignore
+      conversation.value[conversation.value.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
+
+      pushMessageToConversation("system", response.data.conversation_response);
+    })
+    .finally(() => {
+      response_loading.value = false
+    });
+}
+
+function pushMessageToConversation(role: str, message: str) {
+  // @ts-ignore
+  conversation.value.push({
+    role: role,
+    message: message
+  });
+}
+
 function handleConversationInput(event: any) {
   // shift + enter is common for new line.
   if (event.shiftKey) {
@@ -108,29 +129,7 @@ function handleConversationInput(event: any) {
   const messageCopy = userMessage.value.slice();
   userMessage.value = "";
 
-  // @ts-ignore
-  conversation.value.push({
-    role: "user",
-    message: messageCopy
-  });
-
-
-  // @ts-ignore
-  converse(conversation_id.value, messageCopy)
-    .then(response => {
-      conversation_id.value = response.data.conversation_id
-      // @ts-ignore
-      conversation.value[conversation.value.length - 1]["learning_moments"] = response.data.learning_moments.learning_moments
-
-      // @ts-ignore
-      conversation.value.push({
-        role: "system",
-        message: response.data.conversation_response,
-      });
-    })
-    .finally(() => {
-      response_loading.value = false
-    });
+  converseWithMessage(messageCopy);
 }
 
 // @ts-ignore
@@ -161,9 +160,8 @@ function handleAudioInput(audioInput) {
     });
 }
 
-function startConversationWithPrompt(prompt: object) {
-  // @ts-ignore
-  userMessage.value = prompt.message;
-  handleConversationInput({});
-};
+function handlePromptClick(prompt_object) {
+  pushMessageToConversation("user", prompt_object.prompt);
+  converseWithMessage(prompt_object.prompt);
+}
 </script>
