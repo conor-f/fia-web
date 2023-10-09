@@ -61,6 +61,8 @@ function completeTranslation() {
 }
 
 function converseWithMessage(message: string) {
+  isLoading.value = true;
+
   // @ts-ignore
   converse(conversation_id.value, message)
     .then(response => {
