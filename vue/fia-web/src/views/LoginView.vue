@@ -111,8 +111,12 @@ export default {
       login(this.username, this.password)
         .then(response => {
           toast.success("Login successful");
-          authStore.accessToken = response["data"]["access_token"];
-          authStore.refreshToken = response["data"]["refresh_token"];
+
+          authStore.setTokens(
+            response["data"]["access_token"],
+            response["data"]["refresh_token"]
+          );
+
           this.$router.push({ path: "/new-conversation" });
         })
         .catch(error => {

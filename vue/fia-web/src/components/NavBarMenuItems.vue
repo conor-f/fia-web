@@ -28,17 +28,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
-import { RouterLink } from 'vue-router'
+import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/authStore"
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
+const { isLoggedIn } = storeToRefs(authStore);
+
 
 defineProps({
   responsive: Boolean
 });
 defineEmits(["click"]);
+
+
+const watchedIsLoggedIn = ref(false);
 
 const menuItems = ref([
   {
@@ -54,27 +59,32 @@ const menuItems = ref([
   {
     linkText: "Login/Register",
     route: "/login",
-    visible: !authStore.isLoggedIn
+    visible: !watchedIsLoggedIn.value,
   },
   {
     linkText: "Chat",
     route: "/new-conversation",
-    visible: authStore.isLoggedIn
+    visible: watchedIsLoggedIn,
   },
   {
     linkText: "Review",
     route: "/flashcards",
-    visible: authStore.isLoggedIn
+    visible: watchedIsLoggedIn.value,
   },
   {
     linkText: "Conversations",
     route: "/previous-conversations",
-    visible: authStore.isLoggedIn
+    visible: watchedIsLoggedIn.value,
   },
   {
     linkText: "Preferences",
     route: "/user-details",
-    visible: authStore.isLoggedIn
+    visible: true,
   },
 ])
+
+watch(isLoggedIn, (newValue, oldValue) => {
+  console.log(newValue);
+  watchedIsLoggedIn.value = newValue;
+});
 </script>
