@@ -20,9 +20,9 @@
           </span>
         </div>
         <!-- TODO: Hover states -->
-        <div v-else @click="toggleStartAndStop" class="flex items-center mr-2">
-          <MicrophoneIcon v-if="!isRecording" class="mr-3"/>
-          <RecordingIcon v-if="isRecording" class="mb-3"/>
+        <div v-else class="flex items-center mr-2">
+          <MicrophoneIcon v-if="!isRecording" @click="toggleStartAndStop" class="mr-3"/>
+          <RecordingIcon v-if="isRecording" @click="toggleStartAndStop" class="mb-3"/>
           <MessageSendIcon @click="handleMessageInput"/>
         </div>
       </div>
