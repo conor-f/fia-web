@@ -1,52 +1,67 @@
 <template>
-  <div class="about-container">
-    <div class="about-row">
-      Fia is a language learning platform that allows you to learn through conversation from day one.
+  <div class="px-8">
+    <div>
+      <div class="pb-3 pt-4 font-semibold">
+        So what <span class="italic">is</span> Fia anyways?
+      </div>
+
+      <div class="indent-4 prose">
+        Fia is a language learning platform that allows you to learn through
+        conversation. Using custom AI models, Fia analyzes your messages to
+        search for any grammar mistakes you may have made, and when it spots one,
+        it explains your mistake to you.
+      </div>
     </div>
 
-    <div class="about-row">
-      Using custom trained AI models, Fia analyzes your messages to search for grammar mistakes you may have made. When Fia spots one, it corrects you, and creates a flashcard for you to review to help you gain fluency.
+    <div>
+      <div class="pt-4 pb-3 font-semibold">
+        Okay, and where do the flashcards come in?
+      </div>
+
+      <div class="indent-4 prose">
+        After explaining your mistakes, Fia stores it in a database for you to
+        review later. Using a spaced-repetition algorithm, Fia reminds you to
+        review specific flashcards. This algorithm makes the best use of your
+        time and effort by only asking you to review information just before your
+        brain forgets it.
+      </div>
     </div>
 
-    <div class="about-row">
-      Fia decides which flashcards you need to review using a Spaced-Repetition Algorithm. This optimizes your time and effort by only asking you to review information just before your brain forgets it.
+    <div>
+      <div class="pt-4 pb-3 font-semibold">
+        This sounds pretty useful, but I'm not sure it's for me?
+      </div>
+
+      <div class="indent-4 prose">
+        Try it and find out! If you are an absolute beginner, you can practice
+        expressing yourself and using the in-built translation helpers to help
+        you out. If you already know your <span class="italic">dus</span> from
+        your <span class="italic">de las</span>, then just have a conversation
+        where you can learn new vocabulary and keep your accent fresh!
+      </div>
     </div>
 
-    <div class="about-row">
-      Fia is designed for you. Each conversation is tailored to your language fluency, allowing you to have conversations at a level optimized for learning.
+    <div>
+      <div class="pt-4 pb-3 font-semibold">
+        Nice try, but I'm not giving you my data to sell!
+      </div>
+
+      <div class="indent-4 prose">
+        Fia is nothing like that! We are proud to be fully open-source and
+        self-hostable.
+        
+        If you're concerned about what the code is doing,
+        <a href="https://github.com/conor-f/fia-web">feel free to look,</a>
+        and if you love to host your own services (or hate paying for someone
+        else to host them!) then
+        <a href="https://github.com/conor-f/fia_api">self-hosting</a> is always
+        an option for you.
+      </div>
     </div>
 
-    <div class="about-row">
-      As you gain confidence and ability in your new language, Fia will show you how far you’ve progressed.
-    </div>
-
-    <div class="about-row">
-      Fia is designed with privacy at the forefront. For this reason, Fia is open-source and self-hostable. If you have any privacy concerns, don’t take our word for it! You (or a friend!) can review the code to ensure everything is above board.
-    </div>
-
-    <div class="about-row">
-      More questions? Feel free to get in touch at hello@getfia.com
+    <div class="pt-6 font-semibold">
+      More questions? Feedback? Looking for an invite code? Feel free to get in
+      touch at hello@getfia.com
     </div>
   </div>
 </template>
-
-<style>
-.about-container {
-  background-image: linear-gradient(to right bottom, #d44730, #ca4036, #be3a3a, #b2363e, #a63240, #a63040, #a62d40, #a62b40, #b3283f, #bf263c, #cb223a, #d71f36);
-  width: 100%;
-  color: var(--va-text-inverted);
-  display: flex;
-  flex-flow: column;
-}
-
-.about-container .about-row {
-  flex: 0 1 auto;
-  padding-top: 2em;
-  padding-left: 2em;
-  width: 80%;
-  margin: 0 auto;
-  font-weight: normal;
-  font-size: 120%;
-  line-height: 120%;
-}
-</style>

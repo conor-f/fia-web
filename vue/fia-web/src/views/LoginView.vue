@@ -1,20 +1,27 @@
 <template>
-  <div class="login-container">
-    <div class="mb-2">
-      <label for="username_input">
+  <!-- TODO: Fill bottom of screen with background colour. Related to DaisyUI. -->
+  <div class="bg-background-50 pt-8
+    grid grid-cols-3 justify-items-center items-center gap-3
+    w-screen">
+
+      <label
+        for="username_input"
+        class="text-text-900 justify-self-end md:text-xl"
+        >
         Username:
       </label>
-        <input
-          type="text"
-          id="username_input"
-          v-model="username"
+      <input
+        type="text"
+        placeholder="username"
+        class="input col-span-2 input-bordered input-black h-10 w-full justify-self-start max-w-[11rem]"
+        v-model="username"
+        id="username_input"
         />
-    </div>
 
-    <br/>
-
-    <div class="mb-2">
-      <label for="password_input">
+      <label
+        for="password_input"
+        class="text-text-900 md:text-xl justify-self-end"
+        >
         Password:
       </label>
       <input
@@ -22,52 +29,73 @@
         id="password_input"
         @keyup.enter="handle_login_button_press"
         v-model="password"
+        placeholder="password"
+        class="input input-bordered col-span-2 input-black h-10 justify-self-start w-full max-w-[11rem]"
       />
-    </div>
 
-    <br/>
-
-    <va-button
+    <button
+      class="btn btn-primary justify-self-end"
       @click="handle_login_button_press"
-      class="mr-4"
       >
       Login
-    </va-button>
+    </button>
 
-    <va-button @click="show_request_invite_code_modal = true"
-      class="mt-3 ml-4"
+    <!-- TODO: Can't use @click for some reason... -->
+    <button
+      class="btn btn-secondary justify-self-start"
+      onclick="invite_code_modal.showModal()"
       >
       Register
-    </va-button>
+    </button>
   </div>
 
 
-  <va-modal
-    v-model="show_request_invite_code_modal"
-    ok-text="Register"
-    @ok="handle_register_button_press"
-    blur
-    >
-    <h3>Invite Code</h3>
-      <input
-        class="mt-4"
-        placeholder="There currently is none!"
-        v-model="invite_code"
-        @keyup.enter="show_request_invite_code_modal=false; handle_register_button_press()"
-      />
-  </va-modal>
+  <dialog id="invite_code_modal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+      <div class="font-bold text-lg">Invite Code</div>
+
+      <p class="py-4">
+        Please enter an invite code to continue. If you don't
+        have an invite code, email hello@getfia.com to request one!
+      </p>
+
+      <div class="modal-action">
+        <form
+          class="flex flex-col w-full gap-4 items-center"
+          method="dialog"
+          >
+          <input
+            type="text"
+            placeholder=""
+            class="input input-bordered input-black h-10 max-w-[14rem]" 
+            v-model="invite_code"
+            id="username_input"
+            @keyup.enter="handle_register_button_press()"
+            />
+
+          <button
+            class="btn"
+            @click="handle_register_button_press()"
+            >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
 </template>
 
 <script lang="ts">
-/** TODO:
- * Put inputs into flex/grid
- */
 import { login, register } from "@/utils/api"
-import { toast } from "vue-sonner"
+import { useToast } from "vue-toastification"
 import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
-
+const toast = useToast();
 
 export default {
   name: 'LoginView',
@@ -76,7 +104,6 @@ export default {
       "username": "",
       "password": "",
       "invite_code": "",
-      "show_request_invite_code_modal": false
     }
   },
   methods: {
@@ -84,9 +111,13 @@ export default {
       login(this.username, this.password)
         .then(response => {
           toast.success("Login successful");
-          authStore.accessToken = response["data"]["access_token"];
-          authStore.refreshToken = response["data"]["refresh_token"];
-          this.$router.push({ path: "/app-home" });
+
+          authStore.setTokens(
+            response["data"]["access_token"],
+            response["data"]["refresh_token"]
+          );
+
+          this.$router.push({ path: "/new-conversation" });
         })
         .catch(error => {
           console.log(error);
@@ -106,10 +137,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.login-container {
-  padding-top: 2em;
-  margin: 0 auto;
-}
-</style>

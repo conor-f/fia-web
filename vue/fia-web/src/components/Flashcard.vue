@@ -1,44 +1,29 @@
 <template>
-  <div class="flashcard">
-    <va-card
-      v-if="should_show_front"
-      @click="should_show_front=!should_show_front"
-      >
-      <va-card-title>
-        Correct the following
-      </va-card-title>
+  <div class="card bg-background-100 w-100 shadow-xl"
+    @click="should_show_front = !should_show_front">
+    <div class="card-body">
+      <div class="card-title">
+        <span v-if="should_show_front">Answer the Following</span>
+        <span v-if="!should_show_front">Solution</span>
+      </div>
 
-      <va-card-content>
-        {{ item.front }}
-      </va-card-content>
+      <p v-if="should_show_front" class="pt-2 flex prose justify-center">{{ item.front }}</p>
+      <p v-if="!should_show_front" class="prose">{{ item.back }}</p>
 
-      <va-card-actions align="right">
-        <va-button>
-          Flip
-        </va-button>
-      </va-card-actions>
-    </va-card>
-
-    <va-card
-      v-if="! should_show_front"
-      @click="should_show_front=!should_show_front"
-      >
-      <va-card-title>
-        Solution
-      </va-card-title>
-
-      <va-card-content>
-        {{ item.back }}
-      </va-card-content>
-
-      <va-card-actions align="center">
-        <va-button @click="updateFlashcard(0)">Didn't Know</va-button>
-        <va-button @click="updateFlashcard(1)">Hard</va-button>
-        <va-button @click="updateFlashcard(2)">Easy</va-button>
-        <va-button @click="updateFlashcard(3)">Too Easy</va-button>
-        <va-button @click="deleteFlashcard()">Delete</va-button>
-      </va-card-actions>
-    </va-card>
+      <div class="card-actions justify-end">
+        <div v-if="should_show_front">
+          <button class="btn btn-success">
+            Flip
+          </button>
+        </div>
+        <div v-if="!should_show_front" class="">
+          <button @click="updateFlashcard(0)" class="m-1 btn btn-warning">Again</button>
+          <button @click="updateFlashcard(1)" class="m-1 btn btn-info">Okay</button>
+          <button @click="updateFlashcard(2)" class="m-1 btn btn-success">Easy</button>
+          <button @click="deleteFlashcard()" class="m-1 btn btn-error">Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -76,9 +61,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.flashcard {
-  padding: 1rem;
-}
-</style>

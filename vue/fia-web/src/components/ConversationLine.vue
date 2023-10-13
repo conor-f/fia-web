@@ -1,64 +1,50 @@
 <template>
   <div class="conversation-line">
-    <div
-      v-if='item.role=="user"'
-      class="user-flex-container"
-      >
-      <div class="message user-message">
-        <va-card
-          color="#2FE0B3"
-          gradient
-          >
-          <va-card-title>You</va-card-title>
-          <va-card-content>
-            {{ item.message }}
-          </va-card-content>
-        </va-card>
+    <div v-if='item.role=="user"'>
+      <div class="chat chat-start">
+        <div class="chat-bubble chat-bubble-primary">
+          {{ item.message }}
+        </div>
       </div>
-      <div v-if="hasLearningMoments" class="message learning-message">
-        <va-card
+
+      <div v-if="hasLearningMoments" class="chat chat-end">
+        <div
           v-for="(moment, index) in item.learning_moments"
           :key="index"
-          class="learning-moment-container"
+          class="chat-bubble chat-bubble-warning mb-1"
           >
+
           <!-- @vue-ignore -->
-          <va-card-content v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
-            <span class="incorrect-text"> {{ moment.moment.incorrect_section }} </span> ->
-            <span class="correct-text"> {{ moment.moment.corrected_section }} </span>
-            <br/>
-            <br/>
+          <div v-if="Object.hasOwn(moment.moment, 'incorrect_section')">
+            <div class="text-center">
+              <span class="text-error"> {{ moment.moment.incorrect_section }} </span>
+              ->
+              <span class="text-success"> {{ moment.moment.corrected_section }} </span>
+            </div>
             Explanation: {{ moment.moment.explanation }}
-          </va-card-content>
-          <va-card-content v-else>
-            <span class="incorrect-text"> {{ moment.moment.phrase }} </span> ->
-            <span class="correct-text"> {{ moment.moment.translated_phrase }} </span>
-            <br/>
-            <br/>
+          </div>
+
+          <div v-else>
+            <div class="text-center">
+              <span class="text-error"> {{ moment.moment.phrase }} </span>
+              ->
+              <span class="text-success"> {{ moment.moment.translated_phrase }} </span>
+            </div>
             Explanation: {{ moment.moment.explanation }}
-          </va-card-content>
-        </va-card>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div
-      v-else
-      class="system-flex-container"
-      >
-      <div class="message system-message">
-        <va-card
-          color="#db8374"
-          gradient
-          >
-          <va-card-title>Fia</va-card-title>
-          <va-card-content>
-            {{ item.message }}
-            <va-icon
-              name="play_arrow"
-              size="1rem"
-              @click="playAudio(item.message)"
-              />
-          </va-card-content>
-        </va-card>
+    <div v-else class="chat chat-end">
+      <div class="chat-bubble chat-bubble-secondary">
+        {{ item.message }}
+        <PlayIcon
+          class="h-6 w-6 inline
+          stroke-1 text-black-500
+          hover:stroke-2 hover:text-black-700"
+          @click="playAudio(item.message)"
+          />  
       </div>
     </div>
   </div>
@@ -67,11 +53,16 @@
 <script lang="ts">
 import { getAudio } from "@/utils/api"
 
+import PlayIcon from "@/assets/icons/PlayIcon.vue"
+
 export default {
   name: 'ConversationLine',
   props: [
     "item"
   ],
+  components: {
+    PlayIcon,
+  },
   computed: {
     hasLearningMoments: function() {
       // @ts-ignore
@@ -84,10 +75,10 @@ export default {
     },
   },
   methods: {
+    // TODO: Don't allow audio to play if already playing
     playAudio(message: string) {
       getAudio(message).then(async (response) => {
         const data = await response.arrayBuffer();
-        console.log(data)
         const context = new AudioContext();
         const buffer = await context.decodeAudioData(data);
         var source = context.createBufferSource();
@@ -99,40 +90,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.user-flex-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.message {
-  width: 40%;
-  margin: 1em;
-}
-
-.learning-moment-container {
-  border: 1px solid black;
-  margin-top: 0.5rem;
-  border-radius: 1rem;
-}
-
-.learning-message {
-  margin-top: 2em;
-}
-
-.system-flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row-reverse;
-}
-
-.incorrect-text {
-  color: var(--va-danger);
-}
-
-.correct-text {
-  color: var(--va-success);
-}
-</style>

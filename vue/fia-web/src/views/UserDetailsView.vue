@@ -1,31 +1,34 @@
 <template>
-  <div class="user-details-container">
-    <div class="user-details-message">
+  <div class="pt-4 flex flex-col items-center gap-3">
+    <div class="">
       You've logged in {{ timesLoggedIn }} times.
     </div>
 
-    <va-button
-      @click="handleLogoutClick"
-      class="mr-3"
-      >
-      Logout
-    </va-button>
-    <va-button
-      @click="handleDeleteClick"
-      color="danger"
-      class="ml-3"
-      >
-      Delete Account
-    </va-button>
+    <div class="flex flex-row gap-2">
+      <button
+        class="btn btn-primary"
+        @click="handleLogoutClick"
+        >
+        Logout
+      </button>
+      <button
+        @click="handleDeleteClick"
+        color="danger"
+        class="btn btn-secondary"
+        >
+        Delete Account
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { getUserDetails, deleteAccount } from "@/utils/api"
-import { toast } from "vue-sonner"
+import { useToast } from "vue-toastification"
 import { useAuthStore } from "@/stores/authStore"
 
 const authStore = useAuthStore()
+const toast = useToast();
 
 
 export default {
@@ -65,15 +68,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.user-details-container {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.user-details-message {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-</style>
