@@ -43,7 +43,9 @@ defineProps({
 defineEmits(["click"]);
 
 
-const watchedIsLoggedIn = ref(false);
+const watchedIsLoggedIn = ref(authStore.isLoggedIn);
+const watchedIsNotLoggedIn = ref(!authStore.isLoggedIn);
+
 
 const menuItems = ref([
   {
@@ -59,7 +61,7 @@ const menuItems = ref([
   {
     linkText: "Login/Register",
     route: "/login",
-    visible: !watchedIsLoggedIn.value,
+    visible: watchedIsNotLoggedIn,
   },
   {
     linkText: "Chat",
@@ -69,22 +71,26 @@ const menuItems = ref([
   {
     linkText: "Review",
     route: "/flashcards",
-    visible: watchedIsLoggedIn.value,
+    visible: watchedIsLoggedIn,
   },
   {
     linkText: "Conversations",
     route: "/previous-conversations",
-    visible: watchedIsLoggedIn.value,
+    visible: watchedIsLoggedIn,
   },
   {
     linkText: "Preferences",
     route: "/user-details",
-    visible: true,
+    visible: watchedIsLoggedIn,
   },
 ])
 
+// This looks so silly, but it's the only way this would work. The reason for
+// the watchedIsNotLoggedIn is that using !watchedIsLoggedIn didn't work in the
+// array above as it required the value, and converting it to the value meant
+// that it wasn't recomputed on change.
 watch(isLoggedIn, (newValue, oldValue) => {
-  console.log(newValue);
   watchedIsLoggedIn.value = newValue;
+  watchedIsNotLoggedIn.value = !newValue;
 });
 </script>
