@@ -19,11 +19,17 @@
           <span class="loading loading-spinner mr-2 loading-lg text-primary-600">
           </span>
         </div>
-        <!-- TODO: Hover states -->
         <div v-else class="flex items-center mr-2">
-          <MicrophoneIcon v-if="!isRecording" @click="toggleStartAndStop" class="mr-3"/>
+          <MicrophoneIcon
+            v-if="!isRecording"
+            @click="toggleStartAndStop"
+            class="mr-3 text-gray-700 hover:text-gray-900"
+          />
           <RecordingIcon v-if="isRecording" @click="toggleStartAndStop" class="mb-3"/>
-          <MessageSendIcon @click="handleMessageInput"/>
+          <MessageSendIcon
+            @click="handleMessageInput"
+            class="text-gray-700 hover:text-gray-900"
+            />
         </div>
       </div>
     </div>

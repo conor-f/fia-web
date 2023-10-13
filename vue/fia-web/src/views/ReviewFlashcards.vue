@@ -5,43 +5,38 @@
       :item="flashcards[0]"
       @completed="markFlashcardAsComplete"
       />
+    <div v-if="isLoading">
+      Checking for new flashcards to review...
+    </div>
     <div v-else class="">
       Done for now! Check back later for more flashcards to review.
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+
 import { getFlashcards } from "@/utils/api"
-import { useAuthStore } from "@/stores/authStore"
 import Flashcard from "@/components/Flashcard.vue"
 
-const authStore = useAuthStore()
+const isLoading = ref(true);
+const flashcards = ref([]);
 
+onMounted(() => {
+  getFlashcards()
+    .then(response => {
+      this.flashcards = response["data"]["flashcards"];
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+})
 
-export default {
-  name: 'ReviewFlashcards',
-  components: {
-    Flashcard,
-  },
-  data() {
-    return {
-      "flashcards": [],
-    }
-  },
-  created() {
-    getFlashcards()
-      .then(response => {
-        this.flashcards = response["data"]["flashcards"];
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  },
-  methods: {
-    markFlashcardAsComplete() {
-      this.flashcards.shift();
-    }
-  }
+function markFlashcardAsComplete() {
+  flashcards.value.shift();
 }
 </script>
