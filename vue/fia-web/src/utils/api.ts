@@ -56,7 +56,7 @@ export function getUserDetails() {
   });
 }
 
-export function setUserDetails(selectedLanguage: str) {
+export function setUserDetails(selectedLanguage: string) {
   return axios.post(
     API_BASE_URL + "user/set-details",
     {

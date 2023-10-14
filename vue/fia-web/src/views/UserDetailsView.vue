@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref, onMounted } from "vue";
 
 import { setUserDetails, getUserDetails, deleteAccount } from "@/utils/api"

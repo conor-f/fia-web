@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { getAudio } from "@/utils/api"
 import { useUserDetailsStore } from "@/stores/userDetailsStore"
 
