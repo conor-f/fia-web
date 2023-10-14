@@ -29,6 +29,10 @@ import { detect, detectAll } from 'tinyld/heavy';
 import translate from "translate";
 import { createFlashcard } from "@/utils/api"
 
+import { useUserDetailsStore } from "@/stores/userDetailsStore"
+
+const userDetailsStore = useUserDetailsStore()
+
 const props = defineProps({
   conversationID: String,
   selectedText: Object,
@@ -79,10 +83,11 @@ watchEffect(() => {
     for (let langConfidence of detectAll(props.selectedText.text.value)) {
       if (langConfidence.lang == "en") {
         inputLang = "en";
-        outputLang = "de";
+        // @ts-ignore
+        outputLang = userDetailsStore.languageCode;
         break;
-      } else if (langConfidence.lang == "de") {
-        inputLang = "de";
+      } else if (langConfidence.lang == userDetailsStore.languageCode) {
+        inputLang = userDetailsStore.languageCode;
         outputLang = "en";
         break;
       }
