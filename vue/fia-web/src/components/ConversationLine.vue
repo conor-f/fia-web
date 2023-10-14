@@ -50,8 +50,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // @ts-nocheck
+import { ref, computed } from "vue";
+
 import { getAudio } from "@/utils/api"
 import { useUserDetailsStore } from "@/stores/userDetailsStore"
 
@@ -59,38 +61,30 @@ import PlayIcon from "@/assets/icons/PlayIcon.vue"
 
 const userDetailsStore = useUserDetailsStore()
 
-export default {
-  name: 'ConversationLine',
-  props: [
-    "item"
-  ],
-  components: {
-    PlayIcon,
-  },
-  computed: {
-    hasLearningMoments: function() {
-      // @ts-ignore
-      if (Object.hasOwn(this.item, "learning_moments") &&
-        this.item.learning_moments) {
-        return true;
-      }
+const props = defineProps({
+  item: Object,
+});
 
-      return false;
-    },
-  },
-  methods: {
-    // TODO: Don't allow audio to play if already playing
-    playAudio(message: string) {
-      getAudio(message, userDetailsStore.languageCode).then(async (response) => {
-        const data = await response.arrayBuffer();
-        const context = new AudioContext();
-        const buffer = await context.decodeAudioData(data);
-        var source = context.createBufferSource();
-        source.buffer = buffer;
-        source.connect(context.destination);
-        source.start(0);
-      });
-    }
+const hasLearningMoments = computed(() => {
+  // @ts-ignore
+  if ("learning_moments" in props.item &&
+    props.item.learning_moments) {
+    return true;
   }
+
+  return false;
+})
+
+// TODO: Don't allow audio to play if already playing
+function playAudio(message: string) {
+  getAudio(message, userDetailsStore.languageCode).then(async (response) => {
+    const data = await response.arrayBuffer();
+    const context = new AudioContext();
+    const buffer = await context.decodeAudioData(data);
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+  });
 }
 </script>
