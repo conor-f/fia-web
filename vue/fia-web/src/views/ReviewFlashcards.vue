@@ -5,11 +5,13 @@
       :item="flashcards[0]"
       @completed="markFlashcardAsComplete"
       />
-    <div v-if="isLoading">
-      Checking for new flashcards to review...
-    </div>
-    <div v-else class="">
-      Done for now! Check back later for more flashcards to review.
+    <div v-else>
+      <div v-if="isLoading">
+        Checking for new flashcards to review...
+      </div>
+      <div v-else class="">
+        Done for now! Check back later for more flashcards to review.
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@ const flashcards = ref([]);
 onMounted(() => {
   getFlashcards()
     .then(response => {
-      this.flashcards = response["data"]["flashcards"];
+      flashcards.value = response["data"]["flashcards"];
     })
     .catch(error => {
       console.log(error);

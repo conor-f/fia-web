@@ -107,7 +107,7 @@ function createFlashcardClickHandler() {
   createFlashcard(
     // @ts-ignore
     props.conversationID,
-    props.selectedText,
+    props.selectedText.text.value,
     translatedSelection.value,
     true
   ).then(_ => {
