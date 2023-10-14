@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useAuthStore } from "@/stores/authStore"
+import { useUserDetailsStore } from "@/stores/userDetailsStore"
 import router from "@/router/index"
 
 const authStore = useAuthStore()
+const userDetailsStore = useUserDetailsStore()
 export const API_BASE_URL = "https://fia-api.randombits.host/api/"
 
 
@@ -65,7 +67,9 @@ export function setUserDetails(selectedLanguage: str) {
         "Authorization": "Bearer " + authStore.accessToken
       }
     }
-  ).catch(error => {
+  ).then(response => {
+    userDetailsStore.setLanguageCode(selectedLanguage);
+  }).catch(error => {
     if (error.response.status == 403) {
       authStore.clearTokens();
       router.push({ path: "/" });
@@ -266,6 +270,7 @@ export function createFlashcard(
 
 export function getAudio(
   text: string,
+  languageCode: string,
 ) {
   return fetch(
     API_BASE_URL + "teacher/get-audio",
@@ -277,7 +282,8 @@ export function getAudio(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        text: text
+        text: text,
+        language_code: languageCode,
       }),
       mode: "cors",
     },

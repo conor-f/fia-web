@@ -52,8 +52,11 @@
 
 <script lang="ts">
 import { getAudio } from "@/utils/api"
+import { useUserDetailsStore } from "@/stores/userDetailsStore"
 
 import PlayIcon from "@/assets/icons/PlayIcon.vue"
+
+const userDetailsStore = useUserDetailsStore()
 
 export default {
   name: 'ConversationLine',
@@ -77,7 +80,7 @@ export default {
   methods: {
     // TODO: Don't allow audio to play if already playing
     playAudio(message: string) {
-      getAudio(message).then(async (response) => {
+      getAudio(message, userDetailsStore.languageCode).then(async (response) => {
         const data = await response.arrayBuffer();
         const context = new AudioContext();
         const buffer = await context.decodeAudioData(data);
