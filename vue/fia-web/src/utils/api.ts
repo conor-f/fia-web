@@ -154,7 +154,7 @@ export function converse(conversation_id: string, message: string) {
 export function converseWithAudio(conversation_id: string, audio_file: Blob) {
   // TODO: This is a mess...
   return axios.post(
-    API_BASE_URL + "teacher/converse-with-audio?conversation_id=" + conversation_id,
+    API_BASE_URL + "teacher/converse-with-audio?conversation_id=" + conversation_id + "&language_code=" + userDetailsStore.languageCode,
     {
       audio_file: audio_file
     },
