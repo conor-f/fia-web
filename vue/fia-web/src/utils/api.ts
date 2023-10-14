@@ -54,6 +54,29 @@ export function getUserDetails() {
   });
 }
 
+export function setUserDetails(selectedLanguage: str) {
+  return axios.post(
+    API_BASE_URL + "user/set-details",
+    {
+      language_code: selectedLanguage,
+    },
+    {
+      headers: {
+        "Authorization": "Bearer " + authStore.accessToken
+      }
+    }
+  ).catch(error => {
+    if (error.response.status == 403) {
+      authStore.clearTokens();
+      router.push({ path: "/" });
+    } else {
+      console.log(error);
+    }
+
+    throw error;
+  });
+}
+
 export function deleteAccount() {
   return axios.post(
     API_BASE_URL + "user/delete",

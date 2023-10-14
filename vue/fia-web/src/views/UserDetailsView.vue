@@ -4,15 +4,23 @@
       You've logged in {{ timesLoggedIn }} times.
     </div>
 
-    <select class="select select-bordered w-ful max-w-xs">
+    <select v-model="selectedLanguage" class="select select-bordered w-ful max-w-xs">
       <option
-        v-for="(language, index) in languageOptions"
-        :key="language.languageCode"
-        :value="language.languageCode"
+        v-for="(language, languageCode) in languageOptions"
+        :key="languageCode"
+        :value="languageCode"
         >
         {{ language.languageWord }}
       </option>
     </select>
+
+    <button
+      class="btn btn-primary"
+      @click="handleSaveDetailsClick"
+      >
+      Save
+    </button>
+
     <div class="flex flex-row gap-2">
       <button
         class="btn btn-primary"
@@ -34,7 +42,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import { getUserDetails, deleteAccount } from "@/utils/api"
+import { setUserDetails, getUserDetails, deleteAccount } from "@/utils/api"
 import { useToast } from "vue-toastification"
 import { useAuthStore } from "@/stores/authStore"
 
@@ -45,38 +53,36 @@ const router = useRouter();
 const toast = useToast();
 
 const timesLoggedIn = ref(0);
-const languageOptions = ref([
-  {
-    language_code: "de",
+const selectedLanguage = ref("");
+const languageOptions = ref({
+  "de": {
     languageWord: "German",
     selected: false
   },
-  {
-    languageCode: "it",
+  "it": {
     languageWord: "Italian",
     selected: false
   },
-  {
-    language_code: "es",
+  "es": {
     languageWord: "Spanish",
     selected: false
   },
-  {
-    language_code: "nl",
+  "nl": {
     languageWord: "Dutch",
     selected: false
   },
-  {
-    language_code: "fr",
+  "fr": {
     languageWord: "French",
     selected: false
   },
-]);
+});
 
 onMounted(() => {
   getUserDetails()
     .then(response => {
       timesLoggedIn.value = response["data"]["times_logged_in"];
+      languageOptions.value[response["data"]["current_language_code"]]["selected"] = true;
+      selectedLanguage.value = response["data"]["current_language_code"];
     })
     .catch(error => {
       console.log(error);
@@ -87,6 +93,13 @@ function handleLogoutClick() {
   authStore.clearTokens();
   router.push({ path: "/" });
   toast.success("Logout successful");
+}
+
+function handleSaveDetailsClick() {
+  setUserDetails(selectedLanguage.value)
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 function handleDeleteClick() {
