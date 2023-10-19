@@ -40,19 +40,24 @@ import ConversationInputs from "@/components/ConversationInputs.vue"
 
 import { ref, computed } from "vue";
 
-import { useTextSelection } from '@vueuse/core';
+import { refDebounced, useTextSelection } from '@vueuse/core';
 
 const conversation = ref([]);
 const conversation_id = ref("new");
 const isLoading = ref(false);
-const selectedText = useTextSelection()
+const isSelectedTextStable = refDebounced(useTextSelection().text, 1000);
+const selectedText = useTextSelection();
 
 const isActiveConversation = computed(() => {
   return conversation.value.length != 0;
 })
 
 const shouldShowTranslation = computed(() => {
-  return isActiveConversation.value && selectedText.text.value != "";
+  return (
+    isSelectedTextStable.value != "" &&
+    isActiveConversation.value &&
+    selectedText.text.value != ""
+  );
 })
 
 function completeTranslation() {
