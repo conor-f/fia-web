@@ -35,6 +35,11 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(Toast, {});
+app.use(Toast, {
+  maxToasts: 3,
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+  timeout: 3000,
+});
 
 app.mount('#app')
