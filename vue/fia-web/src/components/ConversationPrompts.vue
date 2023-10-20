@@ -21,13 +21,14 @@
 import { ref, computed } from "vue";
 
 import ConversationPrompt from "@/components/ConversationPrompt.vue"
-import prompts from "@/utils/prompts.ts";
+import prompts from "@/utils/prompts";
 import { useUserDetailsStore } from "@/stores/userDetailsStore"
 const userDetailsStore = useUserDetailsStore()
 
 const emit = defineEmits(["promptClicked"]);
 
 const conversationPrompts = computed(() => {
+  // @ts-ignore
   return prompts[userDetailsStore.languageCode];
 })
 
