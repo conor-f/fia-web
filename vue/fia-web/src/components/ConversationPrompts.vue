@@ -21,28 +21,15 @@
 import { ref, computed } from "vue";
 
 import ConversationPrompt from "@/components/ConversationPrompt.vue"
-
+import prompts from "@/utils/prompts.ts";
+import { useUserDetailsStore } from "@/stores/userDetailsStore"
+const userDetailsStore = useUserDetailsStore()
 
 const emit = defineEmits(["promptClicked"]);
 
-const conversationPrompts = ref([
-  {
-    "title": "Game",
-    "prompt": "Können wir zwanzig Fragen spielen?",
-  },
-  {
-    "title": "Sport",
-    "prompt": "Ich glaube, dass Irland die Rugby-Weltmeisterschaft gewinnen wird",
-  },
-  {
-    "title": "Pop Culture",
-    "prompt": "Glaubst du, Taylor Swift hat einen Bauchnabel?",
-  },
-  {
-    "title": "Help!",
-    "prompt": "Kannst du mir beibringen, wie man Kaffee in einer Moka-Kanne kocht?",
-  },
-]);
+const conversationPrompts = computed(() => {
+  return prompts[userDetailsStore.languageCode];
+})
 
 function handlePromptClick(prompt_object: object) {
   emit("promptClicked", prompt_object);
